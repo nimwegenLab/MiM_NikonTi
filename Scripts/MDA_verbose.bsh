@@ -1,0 +1,37 @@
+// MDA_verbose.bsh
+// This script must be run before running a MDA with time, positions and channels (no slices)
+// at each frame, it will display the channel and exposure used by MM.
+
+import org.micromanager.api.PositionList;
+
+acq.clearRunnables();
+
+runnable = new Runnable() {
+	channelGroup = mmc.getChannelGroup();
+	int i = 0;
+   int ch_count = 0;
+   int pos_count = 0;
+   public void run() {
+		PositionList pl = gui.getPositionList();
+		channels = acq.getChannels();
+      
+      print("Image " + i);
+      print("Exposure: " + mmc.getExposure());
+      print(channelGroup + ": " + mmc.getCurrentConfig(channelGroup) + "\n");
+
+		++i;
+      ++ch_count;
+		if (ch_count >= channels.size()) {
+			ch_count = 0;
+			++pos_count;
+		}
+		if (pos_count >= pl.getNumberOfPositions()) {
+			pos_count = 0;
+		}
+   }
+};
+
+// Run the runnable on all frames, positions, and channels,
+// -1 --> attach to all planes along given dimension
+acq.attachRunnable(-1,-1,-1,0,runnable); // f, p, c, s 
+print("Runnable successfully attached to MDA.\n");

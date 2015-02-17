@@ -2,19 +2,20 @@
 // all settings (time points, positions, save) but channels must be set in the MDA window
 
 // must be TPC
-	String transChannel = " DIA";
-	int transExposure = 100;
-	String[] fluoChannels = {"GFP 17%", "GFP 17%", " DIA", "mCherry 9%", "mCherry 9%"};
-	int[] fluoExposures = {2400, 800, 10, 800, 2400};
 
+String transChannel = " DIA";
+int transExposure = 100;
+String[] fluoChannels = {"GFP 17%", "GFP 17%", " DIA", "mCherry 9%", "mCherry 9%"};
+int[] fluoExposures = {2400, 800, 10, 800, 2400};
 
+//String transChannel = "Cy5";
+//int transExposure = 200;
 //String[] fluoChannels = {"DAPI", "DAPI", "FITC", "FITC"};
-//int[] fluoExposures = {1000, 3000, 1000, 3000};
+//int[] fluoExposures = {100, 300, 100, 300};
 
 
 // DO NOT EDIT BELOW
 import org.micromanager.api.PositionList;
-
 acq.clearRunnables();
 
 runnable = new Runnable() {
@@ -56,8 +57,7 @@ runnable = new Runnable() {
    }
 };
 
-// Run the runnable on all frames and channels,
-// but only when slic e and position  are 0.
+// Run the runnable on all frames, positions, and channels,
 // -1 --> attach to all planes along given dimension
-
 acq.attachRunnable(-1,-1,-1,0,runnable); // f, p, c, s 
+print("Runnable successfully attached to MDA.");
