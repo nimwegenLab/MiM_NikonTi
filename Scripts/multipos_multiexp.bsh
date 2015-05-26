@@ -1,18 +1,19 @@
 // modified from manualAcq.bsh
 // all settings (time points, positions, save) but channels must be set in the MDA window
+// must have 2 "dummy" channels defined in MDA
+// must be run (every time!) before starting MDA
 
 // must be TPC
+//
+//String transChannel = " DIA";
+//int transExposure = 100;
+//String[] fluoChannels = {"GFP 17%", "GFP 17%", " DIA", "mCherry 9%", "mCherry 9%"};
+//int[] fluoExposures = {2400, 800, 10, 800, 2400};
 
-String transChannel = " DIA";
+String transChannel = " DIA (GFP)";
 int transExposure = 100;
-String[] fluoChannels = {"GFP 17%", "GFP 17%", " DIA", "mCherry 9%", "mCherry 9%"};
-int[] fluoExposures = {2400, 800, 10, 800, 2400};
-
-//String transChannel = "Cy5";
-//int transExposure = 200;
-//String[] fluoChannels = {"DAPI", "DAPI", "FITC", "FITC"};
-//int[] fluoExposures = {100, 300, 100, 300};
-
+String[] fluoChannels = {"GFP 17%", "GFP 5%", " DIA (GFP)"};
+int[] fluoExposures = {2000, 2000, 10};
 
 // DO NOT EDIT BELOW
 import org.micromanager.api.PositionList;
@@ -41,9 +42,9 @@ runnable = new Runnable() {
 	      mmc.waitForConfig(channelGroup, fluoChannels[pos_count]);
       }
       
-      print("Image " + i);
-      print("Exposure: " + mmc.getExposure());
-      print(channelGroup + ": " + mmc.getCurrentConfig(channelGroup) + "\n");
+ //     print("Image " + i);
+ //     print("Exposure: " + mmc.getExposure());
+ //     print(channelGroup + ": " + mmc.getCurrentConfig(channelGroup) + "\n");
 
 		++i;
       ++ch_count;
