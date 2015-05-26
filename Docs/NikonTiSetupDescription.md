@@ -31,14 +31,14 @@ Full table and more on http://www.biovis.com/lumencor_spectra-x.htm
 
 ## Filter cubes
 
-  | Fluorophore                      | Beam splitter | Emission filter
---|----------------------------------|---------------|----------------
-1 | DAPI                             | 416 (AHF)     | 460/50 (AHF/Chroma ET)
-2 | CFP                              | 458 (AHF)     | 480/17 (AHF/Semrock BrightLine HC)
-3 | [GFP](http://tiny.cc/35qoyx)     | 495 (AHF)     | 525/50 (AHF/Chroma ET 265146)
-4 | [YFP](http://tiny.cc/tbroyx)     | 520 (AHF)     | 542/27 (AHF/Semrock BrightLine HC)
-5 | [mCherry](http://tiny.cc/kxqoyx) | ??            | 647/70 (DELTA TopPride)
-6 | --                               | --            | --
+Pos | Fluorophore                      | Beam splitter | Emission filter
+----|----------------------------------|---------------|----------------
+1   | DAPI                             | 416 (AHF)     | 460/50 (AHF/Chroma ET)
+2   | CFP                              | 458 (AHF)     | 480/17 (AHF/Semrock BrightLine HC)
+3   | [GFP](http://tiny.cc/35qoyx)     | 495 (AHF)     | 525/50 (AHF/Chroma ET 265146)
+4   | [YFP](http://tiny.cc/tbroyx)     | 520 (AHF)     | 542/27 (AHF/Semrock BrightLine HC)
+5   | [mCherry](http://tiny.cc/kxqoyx) | ??            | 647/70 (DELTA TopPride)
+6   | --                               | --            | --
 
 - Positions are written on the flat bottom of the turret.
 - Filter cubes can be opened by pushing the lever toward the center of the emission filter.
