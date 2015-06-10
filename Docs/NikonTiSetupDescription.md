@@ -45,5 +45,12 @@ Pos | Fluorophore                      | Beam splitter | Emission filter
 - Chroma and Nikon filters: arrow toward dichroic.
   Omega and Semrock filters: arrow in the direction of light.
 
+## Camera
+Hamamatsu ORCA-Flash4.0
+Model: C11440-22CU
+SN: 720701
+
+DEFECT CORRECT MODE?
+
 # Computer
 Dell Optiplex 990 (pz-kben01-pdw06)
