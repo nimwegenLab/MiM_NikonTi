@@ -17,15 +17,14 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
 ------------------|-----------------|-------------------|---------------------
-Violet (380-410)	| DAPI, Hoechst	  | 395/25            | 250	
-Blue (420-455)	  | CFP             |	440/20            | 200	
-Cyan (460-490)	  | GFP, FITC	      | 470/24            | 110	
-Teal (500-520)	  | YFP	            | 510/25            | 50	
-*Green* (535-600) | TRITC	          | 549/21	          | 210	
-*Green* (535-600) | Cy3             | 550/15  	        | 190	
-Yellow (535-600)	| mCherry         | 575/25	          | 210	
-*Red* (620-750)	  | Cy5	            | 640/30	          | 170	
-*NIR*	            | Cy7	            | 740/13	          | 40
+Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150	
+Blue (420-455)	  | CFP             |	438/24            | 275	
+Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
+Teal (500-520)	  | YFP	            | 513/17            | 65	
+Green (535-600)   | TRITC (mCherry) | 560/25	          | 380	
+*Yellow* (535-600)| *mCherry*       | *575/25*	        | *210*	
+Red (620-750)	    | Cy5	            | 650/13	          | 105	
+NIR	            | Cy7	            | 740/13	          | 40
 
 Full table and more on http://www.biovis.com/lumencor_spectra-x.htm
 
