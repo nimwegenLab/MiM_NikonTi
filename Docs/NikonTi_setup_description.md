@@ -49,7 +49,13 @@ Hamamatsu ORCA-Flash4.0
 Model: C11440-22CU
 SN: 720701
 
-DEFECT CORRECT MODE?
 
 # Computer
 Dell Optiplex 990 (pz-kben01-pdw06)
+
+
+# Maintenance
+
+## 20150131
+SpectraX illumination aligned and characterized (Thomas).
+

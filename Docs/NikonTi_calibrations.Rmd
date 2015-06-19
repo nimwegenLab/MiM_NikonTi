@@ -1,0 +1,91 @@
+---
+title: "Calibrations for [vng] Nikon Ti"
+author: Thomas Julou
+output: html_document
+---
+
+
+```{r, message=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+
+# Power calibration of Lumencor SpectraX
+
+## Linearity of SpectraX power control
+
+Using the Excite powermeter provided by IMCF (centered on the 100x objective using the diascopic illumiation, set on 475nm), power on sample is measured for increasing values of SpectraX intensity (from 1 to 10%).
+
+- 20150130: default aperture and field shutters settings used.
+- 20150201: aperture (resp. field) shutters adjusted to most homogeneous (resp. smallest without vigneting) pictures.  
+NB: I adjusted the angle of the light guide connector (with tape and paper spacers), so that the spot produced on the centering tool is centered when the aperture diaphragm is open. I then adjusted both field and aperture shutters positions and openings. For the field shutter, all open is required to avoid vigneting at 100x with Flash4. For the aperture shutter, closing from the all open position rapidly results in non-uniform illumination.
+
+```{r}
+pw_setting <- data.frame(matrix(ncol=3, byrow=TRUE, data=c(
+1, 0, 0,
+2, 37.2, 51.7,
+3, 92.0, 130,
+4, 141, 199,
+5, 171, 242,
+6, 221, 312, 
+7, 253, 359,
+8, 307, 437,
+9, 340, 484, 
+10, 391, 558)))
+colnames(pw_setting) <- c("setting", "power_20150130", "power_20150202")
+
+pw_setting <- data.frame(pw_setting) %>% 
+  gather(var, power, -setting) %>%
+  extract(var, 'date', '.*_([[:alnum:]]+)$')
+  
+ggplot(data.frame(pw_setting), aes(setting, power, col=date)) +
+  geom_abline(intercept=0, slope=coef(lm(power~setting, data=subset(pw_setting, date=="20150202")))[2]) +
+  stat_smooth(method="lm") +
+  geom_point() +
+  expand_limits(x=0) +
+  scale_x_continuous(breaks=seq(0, 10, 2)) +
+  scale_colour_brewer(palette='Set1') +
+  labs(x='SpectraX power (%)', y='measured power (µW)')
+```
+
+Adjusting the excitation diaphragms results in higher power at a given SpectraX setting.
+
+## Cross illumination between neighbouring positions
+
+Aim: Estimate how much illumination is received between neighbouring positions when a time-lapse is recorder on multiple position.
+
+Setup: Excite power meter covered by a black cardboard cap with a 2mm hole.  
+Measurements at 475nm with power set to 5%.  
+The distance is measured from the position of maximum intensity, by increment of 1 field width (133.12um).
+
+```{r}
+pw_dist <- matrix(ncol=3, byrow=TRUE, data=c(
+0, 67.85, 67.9,
+1, 65.7, 66.5,
+2, 60.85, 62.5,
+3, 54.8, 56.5,
+4, 48.2, 48.5,
+5, 40.4, 37.9,
+6, 31.3, 29.0,
+7, 23.5, 21.4,
+8, 14.8, 13.2,
+9, 8.17, 7.52,
+10, 4.52, 4.44))
+colnames(pw_dist) <- c("d", "pw_horiz", "pw_vert")
+
+pw_dist <- data.frame(pw_dist) %>% 
+  gather(var, pw, -d) %>%
+  extract(var, 'direction', '.*_([[:alnum:]]+)$') %>%
+  mutate(d = d * 133.12)       # convert to microns
+
+qplot(d, pw, col=direction, data=pw_dist) +
+  expand_limits(y=0) +
+  scale_colour_brewer(palette='Set1') +
+  labs(x='distance (µm)', y='power (µW)')
+```
+
+Using a 2mm hole, only 40% (67.9/271) of the total intensity can be collected. Moving the stage horizontally or vertically produces similar changes; roughly, 10 adjacent fields (in 1D, ≈100 in 2D) received 50% or more of the excitation light.
+

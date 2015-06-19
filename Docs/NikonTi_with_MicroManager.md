@@ -1,7 +1,10 @@
+---
+title: "Instructions for using [vng] Nikon Ti with Micro-Manager"
+author: Thomas Julou
+output: html_document
+---
 
-
-# Using Nikon Ti with Micro-Manager
-## PFS autofocus
+# PFS autofocus
 
 from http://micro-manager.3463995.n2.nabble.com/Perfect-Focus-and-MDA-tp7582535p7582551.html
 
@@ -20,4 +23,9 @@ from http://micro-manager.3463995.n2.nabble.com/Perfect-Focus-and-MDA-tp7582535p
 	the Z drive in the position list (see Kurt's explanation above). 
 	Including the PFSOffset in the position list is optional (include only 
 	if you want different offsets per position). 
+
+
+# Flash4 camera
+
+The Flash camera uses an sCMOS chip which has a uniquely high quantum efficiency but at the cist of variable pixels readout noise and gain. In order to compensate for those pixels innacuracy, the default camera behaviour is to replace them in real-time by their neighbours average. In order to disable this feature, set the property "DEFECT CORRECT MODE" TO OFF.
 
