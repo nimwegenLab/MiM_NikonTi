@@ -32,12 +32,14 @@ Full table and more on http://www.biovis.com/lumencor_spectra-x.htm
 
 Pos | Fluorophore                      | Beam splitter | Emission filter
 ----|----------------------------------|---------------|----------------
-1   | DAPI                             | 416 (AHF)     | 460/50 (AHF/Chroma ET)
-2   | CFP                              | 458 (AHF)     | 480/17 (AHF/Semrock BrightLine HC)
-3   | [GFP](http://tiny.cc/35qoyx)     | 495 (AHF)     | 525/50 (AHF/Chroma ET 265146)
-4   | [YFP](http://tiny.cc/tbroyx)     | 520 (AHF)     | 542/27 (AHF/Semrock BrightLine HC)
-5   | [mCherry](http://tiny.cc/kxqoyx) | ??            | 647/70 (DELTA TopPride)
+1   | DAPI                             | 416 (AHF)     | 460/50 (Chroma ET)
+2   | CFP                              | 458 (AHF)     | 480/17 (Semrock BrightLine HC)
+3   | [GFP](http://tiny.cc/35qoyx)     | 495 (AHF)     | 525/50 (Chroma ET 265146)
+4   | [YFP](http://tiny.cc/tbroyx)     | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
+5   | [mCherry](http://tiny.cc/kxqoyx) | 594 (Chroma)  | 647/70 (DELTA TopPride)
 6   | --                               | --            | --
+
+to come: [RFP](http://tiny.cc/t9ukzx) 573 - 609/54 (Semrock BrightLine HC)
 
 - Positions are written on the flat bottom of the turret.
 - Filter cubes can be opened by pushing the lever toward the center of the emission filter.
@@ -45,11 +47,10 @@ Pos | Fluorophore                      | Beam splitter | Emission filter
   Omega and Semrock filters: arrow in the direction of light.
 
 ## Camera
-Hamamatsu ORCA-Flash4.0
-Model: C11440-22CU
+Hamamatsu ORCA-Flash4.0  
+Model: C11440-22CU  
 SN: 720701
 
-DEFECT CORRECT MODE?
 
 # Computer
 Dell Optiplex 990 (pz-kben01-pdw06)
