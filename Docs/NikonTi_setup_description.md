@@ -21,12 +21,13 @@ Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150
 Blue (420-455)	  | CFP             |	438/24            | 275	
 Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
 Teal (500-520)	  | YFP	            | 513/17            | 65	
-Green (535-600)   | TRITC (mCherry) | 560/25	          | 380	
-*Yellow* (535-600)| *mCherry*       | *575/25*	        | *210*	
+*Green*&#42; (535-600) | *TRITC*         | *560/25*	        | *380*	
+*Yellow*&#42; (535-600)| *mCherry*       | *575/25*	        | *210*	
 Red (620-750)	    | Cy5	            | 650/13	          | 105	
 NIR	            | Cy7	            | 740/13	          | 40
 
 Full table and more on http://www.biovis.com/lumencor_spectra-x.htm
+&#42; These filters need to be exchanged manually.
 
 ## Filter cubes
 
@@ -58,4 +59,7 @@ Dell Optiplex 990 (pz-kben01-pdw06)
 
 ## 20150131
 SpectraX illumination aligned and characterized (Thomas).
+
+## 20150619
+Flash4 characterization: readout noise and gain (Thomas).
 

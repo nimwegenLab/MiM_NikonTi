@@ -4,6 +4,20 @@ author: Thomas Julou
 output: html_document
 ---
 
+
+# Fluorescence illumination
+A single LED is used to excite TRITC/RFP and mCherry. You need to manually change the excitation filter in SpectraX (slot G/Y) if you want to achieve the best imaging:
+
+- TRITC/RFP: 560/25
+- mCherry: 575/25
+
+
+# Transmitted light illumination
+
+For phase contrast, use the manual GIF filter and the diffuser (D). With our 100x objective, use phase ring Ph3.
+Adjust the focus and the centering of the condenser to achieve Kohler illumination.
+
+
 # PFS autofocus
 
 from http://micro-manager.3463995.n2.nabble.com/Perfect-Focus-and-MDA-tp7582535p7582551.html

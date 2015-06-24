@@ -89,3 +89,29 @@ qplot(d, pw, col=direction, data=pw_dist) +
 
 Using a 2mm hole, only 40% (67.9/271) of the total intensity can be collected. Moving the stage horizontally or vertically produces similar changes; roughly, 10 adjacent fields (in 1D, ≈100 in 2D) received 50% or more of the excitation light.
 
+
+
+# Calibrations of Hamamatsu Flash4 camera
+
+By default calibrations are done for 2s exposure.
+
+QE is used for e- to photons conversion.
+
+## Readout noise calibrations
+
+acquire 1000 dark images (with a cap on the camera)
+
+## Gain calibration
+
+acquire pictures with uniform illumination between 20 and 4000 photons (i.e. 14 and 2800 ADU). Uniform illumination is achieved using the TRANS LED at various power with the GFP fluo cube in the light path.
+
+LED power | mean ADU
+     0.2% |      
+     0.4% |      
+     0.6% |      
+     0.8% |      
+       1% |      218
+       2% |      913
+       3% |      
+       4% |     2204
+       5% |     2832
