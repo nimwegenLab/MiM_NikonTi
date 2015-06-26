@@ -91,27 +91,69 @@ Using a 2mm hole, only 40% (67.9/271) of the total intensity can be collected. M
 
 
 
+
 # Calibrations of Hamamatsu Flash4 camera
 
-By default calibrations are done for 2s exposure.
+## Intro videos on scientific cameras by Micro-Manager developer
 
-QE is used for e- to photons conversion.
+- [Cameras and Detectors I: How do they work?](http://www.ibiology.org/ibioeducation/taking-courses/cameras-and-detectors-i-how-do-they-work.html)
+- [Cameras and Detectors II: Specifications and Performance](http://www.ibiology.org/ibioeducation/taking-courses/cameras-and-detectors-ii-specifications-and-performance.html)
+- [Camera Calibration](http://www.ibiology.org/ibioeducation/taking-courses/camera-calibration.html)
 
-## Readout noise calibrations
 
-acquire 1000 dark images (with a cap on the camera)
+## Overview of our use case
+At GFP excitation wavelength, the camera quantum efficiency is ≈ 70%, i.e. 1 gray level (aka ADU) corresponds to 1.42 photons received by the pixel during the exposure. In Matthias' experiments, using GFP 9% excitation and 2s exposure, we measure the following intensities:
 
-## Gain calibration
+- without induction, background intensity ≈ 20 ADU/px (i.e ≈ 30 photons)
+- at full induction, maximum intensity ≈ 5000 ADU/px (i.e. ≈ 7000 photons)
 
-acquire pictures with uniform illumination between 20 and 4000 photons (i.e. 14 and 2800 ADU). Uniform illumination is achieved using the TRANS LED at various power with the GFP fluo cube in the light path.
+By comparison, read noise is ≈ 2.5 photons (rms^2). Even at low expression, we're exposing long enough so that shot noise is dominating over read noise.
 
-LED power | mean ADU
-     0.2% |      
-     0.4% |      
-     0.6% |      
-     0.8% |      
-       1% |      218
-       2% |      913
-       3% |      
-       4% |     2204
-       5% |     2832
+Using air cooling, the dark current is 0.06 electrons/pixel/s.
+
+
+## Improving the fluorescence estimation from raw images
+
+### Need for correction
+- without illumination, each pixel has a specific offset and variance (due to the fact that each pixel has its own ADC and electronics; hence rather stable in time).
+- with illumination, each pixel has a specific gain (also due to the fact that each pixel has its own ADC and electronics; hence rather stable in time).
+- sCMOS sensors are known to have rather abundant “defective” pixels (which have either offset or variance much higher than the average, or much lower gain). The camera has a “defect correct mode” that we currently use (enabled by default) where such pixels are stored in memory and interpolated by their neighbours average.
+
+NB: lower temperature of the sensor (achieved with water cooling) reduces the offset of defective pixels.
+
+### Experimental procedure
+Recommended background correction:
+- use the camera with “defect correct mode” ON
+- measure offset from dark images and gain from quasi-uniform illumination images.
+- for each raw image, convert it to real numbers, subtract the pixel-specific offset, then divide by the normalised gain value. if the picture need to be saved as 16bit-TIFF, then add a uniform offset (e.g. 100).
+
+NB: In this approach, the “defect correct mode” is kept mostly to handle pixels with high variance.
+
+### Estimating the camera gain and each pixel gain
+
+[Photon-transfer curves](http://harvestimaging.com/blog/?p=1034) are used to estimate the detector's read noise and photon transfer (number of electrons per photon). They are popular because they allow to measure these parameters without absolute measurements of the light input. Although they are usually measured for the whole camera chip, the same concepts can be translated to the pixel level. In this case, they allow to measure the gain of each pixel without requiring uniform illumination of the sensor. \
+NB: quantum yield is used when a wavelength spectrum is considered.
+
+Experimentally, photon transfer curves are produced by exposing the camera to quasi-uniform illumination (e.g with a LCD screen and a diffuser), and acquiring several time series of images at different exposures. Note again that for pixel gain measurement, the illumination does not need to be uniform provided that it is constant within one image series. Because the dark current is as low as 0.06 electrons/pixel/s (with air cooling), it is low compared to read noise and its changes can be neglected when the exposure is changed during uniform illumiation images acquisition.
+
+
+#### Read noise and gain estimation from photon-transfer curves
+The measured signal of the sensor can be written as $S_t = k N_o + S_o$.
+The measured temporal noise on pixel level can be written as $\sigma_t^2 = k^2 \sigma_r^2 + k^2 \sigma_o^2$. The first term of the sum accounts for the read noise ($k^2 \sigma_r^2$), while the second one accounts for the photon shot noise ($k^2 \sigma_o^2$).
+
+- $S_t$ : measured output signal [DN],
+- $k$ : conversion gain (aka photon transfer) [DN/e-],
+- $N_o$ : number of optically generated electrons,
+- $S_o$ : offset signal [DN],
+- $\sigma_t$ : total temporal noise measured [DN],
+- $\sigma_r$ : temporal noise associated with the readout channel [e-], also the noise floor in dark at 0 s exposure time,
+- $\sigma_o$ : photon shot noise [e-].
+
+At low illumination, read noise dominates the measured noise $\sigma_{lo}$: $\sigma_{lo} = k \sigma_r$. 
+
+At intermediate illumination, shot noise dominates and its variance equals the signal mean (since shot noise is Poissonian): $\sigma_{hi}^2 = k^2 \sigma_r^2 + k (S_t – S_o)$. \
+  i.e. $\sigma_{hi}^2 = \sigma_{lo}^2 + k (S_t – S_o)$ \  
+  i.e. $(\sigma_{hi}^2-\sigma_{lo}^2) - k (S_t – S_o) = 0$
+
+Typical photon transfer curve analysis consists in estimating the read noise $\sigma_r$ and the conversion gain $k$. $\sigma_r$ is best estimated as the asymptote of $log(\sigma_t^2) = f(log(S_t – S_o))$. $k$ is best estimated as the slope of the line in $\sigma_t^2 = f(S_t – S_o)$ (acquired in the illumination regime where shot noise dominate: $S_t – S_o \gg \sigma_r^2$). This can be rephrased as a minimization problem as in Eq. 17 of the supplementary material of [@huang2013video]: $\hat{k} = argmin \sum_{i} \big( (\sigma_{hi, i}^2-\sigma_{lo}^2) - k (S_{t, i} – S_o) \big)^2$ for a sequence (indexed by $i$) of intensity time series of a given pixel.
+
