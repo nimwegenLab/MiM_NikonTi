@@ -21,8 +21,8 @@ Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150
 Blue (420-455)	  | CFP             |	438/24            | 275	
 Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
 Teal (500-520)	  | YFP	            | 513/17            | 65	
-*Green*&#42; (535-600) | *TRITC*         | *560/25*	        | *380*	
-*Yellow*&#42; (535-600)| *mCherry*       | *575/25*	        | *210*	
+*Green* (535-600) | *TRITC*&#42;         | *560/25*	        | *380*	
+*Yellow* (535-600)| *mCherry*&#42;       | *575/25*	        | *210*	
 Red (620-750)	    | Cy5	            | 650/13	          | 105	
 NIR	            | Cy7	            | 740/13	          | 40
 
@@ -46,6 +46,18 @@ to come: [RFP](http://tiny.cc/t9ukzx) 573 - 609/54 (Semrock BrightLine HC)
 - Filter cubes can be opened by pushing the lever toward the center of the emission filter.
 - Chroma and Nikon filters: arrow toward dichroic.
   Omega and Semrock filters: arrow in the direction of light.
+
+## Using RFP/TRITC filters
+By default, the setup features an mCherry filetr set. It can be exchanged for RFP/TRITC filters with the following steps:
+
+1. select GFP filter and turn off the setup
+2. remove the turret cap, pull out the mCherry cube. Then put the RFP/TRITC cube and close the cap.
+3. Open the Spectra upper cap (2 screws). Remove the filter at the G/Y position and put the appropriate one.
+4. Acquire the picture using the `RFP` illumination group. \
+NB: this is not changing any setting compared to the `mCherry` illumination but it allows to have correct metadata for the picture.
+
+ALWAYS PUT BACK THE mCherry FILTER SET ONCE YOU ARE DONE.
+
 
 ## Camera
 Hamamatsu ORCA-Flash4.0  

@@ -12,6 +12,14 @@ A single LED is used to excite TRITC/RFP and mCherry. You need to manually chang
 - mCherry: 575/25
 
 
+## Acquiring fluorescence excitation flatfield images
+- in MiM Tools>Options, uncheck "Save XY positions in separate stack files".
+- adjust illumination and exposure in main window. Select an area of the fluorescent slide without dust nor bubbles.
+- in MDA, check only "Multiple positions". In position list, use "Create grid", press "..." 5 times, then "Center Here", and finally "OK" (this should create a list of 25 positions). Acquire!
+- Check that there is no position with an unexpected illumination pattern (e.g. bubbles) 
+- Save as image stack file.
+
+
 # Transmitted light illumination
 
 For phase contrast, use the manual GIF filter and the diffuser (D). With our 100x objective, use phase ring Ph3.
