@@ -10,14 +10,26 @@
 //String[] fluoChannels = {"GFP 17%", "GFP 17%", " DIA", "mCherry 9%", "mCherry 9%"};
 //int[] fluoExposures = {2400, 800, 10, 800, 2400};
 
+long startDelayMs = 10000; //7200000; // 2h
+
 String transChannel = " DIA (GFP)";
 int transExposure = 100;
-String[] fluoChannels = {"GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%"};
-int[] fluoExposures = {1600,1600,1600,1600,1600,1600,1600,1600};
+//String[] fluoChannels = {"GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%"," DIA (GFP)"};
+//int[] fluoExposures = {1600,1600,1600,1600,1600,1600,1600,10};
+String[] fluoChannels = {"GFP 17%"," DIA (GFP)"};
+int[] fluoExposures = {500,10};
 
 // DO NOT EDIT BELOW
+import java.util.Date;
 import org.micromanager.api.PositionList;
 acq.clearRunnables();
+
+//delayRunnable = new Runnable() {
+//   public void run() {
+//		mmc.sleep(startDelayMs);
+//   }
+//};
+
 
 runnable = new Runnable() {
 	channelGroup = mmc.getChannelGroup();
@@ -28,6 +40,12 @@ runnable = new Runnable() {
 		PositionList pl = gui.getPositionList();
 		channels = acq.getChannels();
 		channel = channels.get(ch_count);
+
+print (new Date());
+		if (i == 0) {
+			print(gui.getAcquisitionPath());
+			mmc.sleep(startDelayMs);
+		}
 
       if (ch_count == 0) {
 			//	set TRANS channel
@@ -57,6 +75,9 @@ runnable = new Runnable() {
 		}
    }
 };
+
+//acq.attachRunnable(0,0,0,0,delayRunnable); // f, p, c, s 
+//print("Start delay runnable successfully attached to MDA.");
 
 // Run the runnable on all frames, positions, and channels,
 // -1 --> attach to all planes along given dimension

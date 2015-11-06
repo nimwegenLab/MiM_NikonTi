@@ -15,6 +15,9 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 ## Spectra X
 
+Model: SPECTRAX-6_LCR_SA
+SN: 3486
+
 Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
 ------------------|-----------------|-------------------|---------------------
 Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150	
