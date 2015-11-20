@@ -40,14 +40,14 @@ Full table and more available from [Lumencor website](http://www.lumencor.com/do
 
 Pos | Fluorophore                      | Emission filter    | Beam splitter | Emission filter
 ----|----------------------------------|--------------------|---------------|----------------
-1   | [CFP](http://tiny.cc/ksnu5x)     | --                 | 458 (AHF)     | 480/17 (Semrock BrightLine HC
-*1* | *DAPI*                           | --                 | 416 (AHF)     | 460/50 (Chroma ET)
-2   | [GFP](http://tiny.cc/6dvkzx)     | --                 | 495 (AHF)     | 525/50 (Chroma ET 265146)
-*2* | [*YFP*](http://tiny.cc/8evkzx)   | --                 | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
-3   | [RFP](http://tiny.cc/t9ukzx)     | 560/25 (Semrock)   | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
-4   | [mCherry](http://tiny.cc/egvkzx) | 575/25 (Semrock)   | 594 (Chroma)  | 647/70 (DELTA TopPride)
-5   | [Cy5.5](http://tiny.cc/k6mu5x)   |--                  | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
-6   | --                               | --                 | --            | --
+1   | --                               | --                 | --            | --
+2   | [CFP](http://tiny.cc/ksnu5x)     | --                 | 458 (AHF)     | 480/17 (Semrock BrightLine HC
+*2* | *DAPI*                           | --                 | 416 (AHF)     | 460/50 (Chroma ET)
+3   | [GFP](http://tiny.cc/6dvkzx)     | --                 | 495 (AHF)     | 525/50 (Chroma ET 265146)
+*3* | [*YFP*](http://tiny.cc/8evkzx)   | --                 | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
+4   | [RFP](http://tiny.cc/t9ukzx)     | 560/25 (Semrock)   | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
+5   | [mCherry](http://tiny.cc/egvkzx) | 575/25 (Semrock)   | 594 (Chroma)  | 647/70 (DELTA TopPride)
+6   | [Cy5.5](http://tiny.cc/k6mu5x)   |--                  | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
 
 
 - Positions are written on the flat bottom of the turret.
@@ -90,7 +90,12 @@ pseudo-unifrom illumination of the sensor is achieved using an iphone (min brigh
 use a modified version of Sturman's camera lab to acquire 20 different exposures (from 13 to 1950 ms; stored as stack slices) with 200 images for each exposure.
 Defect Correct Mode ON.
 
+## 20151120
+- Reordered filter cubes (empty on 1). TRITC and mcherry excitation filters moved to the cubes
+- Upgraded Hamamatsu DCAM API to 15.10.4787
+- Upgraded micromanager to 1.4.22
+
+
 ## To do
 - check field diaphragm for fluo excitation
 - measure power for all filter sets (e.g. at 2")
-
