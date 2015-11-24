@@ -71,6 +71,8 @@ Hamamatsu ORCA-Flash4.0
 Model: C11440-22CU  
 SN: 720701
 
+Camera cooler: CoolCare (set to 20ºC)
+
 
 # Computer
 Dell Optiplex 990 (pz-kben01-pdw06)
@@ -78,22 +80,25 @@ Dell Optiplex 990 (pz-kben01-pdw06)
 
 # Maintenance
 
-## 20150131
-SpectraX illumination aligned and characterized (Thomas).
+## 20150131 (Thomas)
+SpectraX illumination aligned and characterized.
 
-## 20150619
-20150619: characterization of Flash4 read noise (Thomas).\
+## 20150619 (Thomas)
+20150619: characterization of Flash4 read noise.\
 using 2s exposure and Defect Correct Mode ON, with a capped camera (light in the room??)
 
-20150626: characterization of Flash4 gain (Thomas).\
+20150626: characterization of Flash4 gain.\
 pseudo-unifrom illumination of the sensor is achieved using an iphone (min brightness, flashlight app at 100%; Plane mode ON and on charge), the GIF filter of NikonTi TRANS illumination and 3 plastic cups as a diffuser (with their side covered by black paper).
 use a modified version of Sturman's camera lab to acquire 20 different exposures (from 13 to 1950 ms; stored as stack slices) with 200 images for each exposure.
 Defect Correct Mode ON.
 
-## 20151120
+## 20151120 (Thomas)
 - Reordered filter cubes (empty on 1). TRITC and mcherry excitation filters moved to the cubes
 - Upgraded Hamamatsu DCAM API to 15.10.4787
 - Upgraded micromanager to 1.4.22
+
+## 20151124 (Thomas)
+- Configured camera for water cooling.
 
 
 ## To do

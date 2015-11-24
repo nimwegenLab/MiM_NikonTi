@@ -47,5 +47,7 @@ from http://micro-manager.3463995.n2.nabble.com/Perfect-Focus-and-MDA-tp7582535p
 
 # Flash4 camera
 
-The Flash camera uses an sCMOS chip which has a uniquely high quantum efficiency but at the cist of variable pixels readout noise and gain. In order to compensate for those pixels innacuracy, the default camera behaviour is to replace them in real-time by their neighbours average. In order to disable this feature, set the property "DEFECT CORRECT MODE" TO OFF.
+The Flash camera uses an sCMOS chip which has a uniquely high quantum efficiency but at the cost of variable pixels readout noise and gain. In order to compensate for those pixels innacuracy, the default camera behaviour is to replace them in real-time by their neighbours average. In order to disable this feature, set the property "DEFECT CORRECT MODE" TO OFF.
 
+In order to improve the performance of the sensor, we use water cooling for the camera. In normal use,  the `Camera Cooling` setting must be ON. Check regularly that there is water in the cooler tank, otherwise refill it (up to serpentine top) with a 1:1 mix of deionized water and tap water.\
+To set the cooling mode, use `DCAM Configurator`, set the appropriate values in `Hardware`, close the software and restart the camera. NB: the values displaid by `DCAM Configurator` are wrong: whether the camera is set to water cooling can be verified since (1) there is no air flow out of the fan on the camera back and (2) the MiM config file would not load otherwise (the `Camera Cooling` property won't be found).

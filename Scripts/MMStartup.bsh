@@ -1,0 +1,21 @@
+// SWITCH ON CAMERA COOLING
+mmc.setProperty("Hamamatsu_DCAM", "Sensor Cooler", "ON");
+
+
+// ENABLE IMAGE FLIPPER PLUGIN
+// Ensure we can load the flipper plugin
+import java.io.File;
+addClassPath(new File(System.getProperty("user.dir") +
+    "/mmplugins/On-The-Fly_Processors/ImageFlipper.jar").getPath());
+
+import org.micromanager.newimageflipper.NewImageFlippingProcessor;
+processor = new NewImageFlippingProcessor();
+// Set the camera device this processor should operate on
+processor.setCamera("Hamamatsu_DCAM");
+// Set the rotation; can be R0, R90, R180, R270
+processor.setRotation(NewImageFlippingProcessor.Rotation.R90);
+// Set the mirroring; either on (true) or off (false)
+processor.setIsMirrored(false);
+// Enable the processor for future images
+gui.addImageProcessor(processor);
+
