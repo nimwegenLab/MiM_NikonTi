@@ -73,6 +73,11 @@ SN: 720701
 
 Camera cooler: CoolCare (set to 20ºC)
 
+## Arduino
+A Arduino Uno programmed with MM default AOTF firmware is used to control the state of the diascopic illumination LED (TTL control). The TTL output is connected to pin 8; since the on-board LED is connected to pin 13, arduino's "Switch State" must be set to 33 (1 for pin 8 + 32 for pin 13).
+
+Additionally, analog inputs A0 to A2 are connected to 3-way connectors (analog input, 5V, ground) in order to read hall effect sensors outputs. This is used to encode the position of several mechanical switches.
+
 
 # Computer
 Dell Optiplex 990 (pz-kben01-pdw06)
@@ -100,7 +105,16 @@ Defect Correct Mode ON.
 ## 20151124 (Thomas)
 - Configured camera for water cooling.
 
+## 20151127 (Thomas)
+- Adjust diaphragm of fluo excitation light path.
+Using the centering tool, aperture diaphragm is set to fill the objective (light contour on the ring).
+Using a uniform fluo slide, the field diaphragm is set tom minimal opening not producing vignetting in the camera field of view.
+Flat field pictures have been saved before and after adjusting the diaphragms.
+
+## 20151203 (Thomas)
+- Improved DIA TTL control: Trek5 USB-TTL box (unreliable) replaced by an Arduino Uno with default AOTF firmware from MM.
+- Added 3 Hall effect sensor to the Arduino: analog inputs A0 to A2 will be used to encode the position of the magnifying lens and the position of the 2 ND filters on fluo excitation light path.
+
 
 ## To do
-- check field diaphragm for fluo excitation
 - measure power for all filter sets (e.g. at 2")
