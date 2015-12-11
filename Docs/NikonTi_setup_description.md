@@ -76,7 +76,13 @@ Camera cooler: CoolCare (set to 20ºC)
 ## Arduino
 A Arduino Uno programmed with MM default AOTF firmware is used to control the state of the diascopic illumination LED (TTL control). The TTL output is connected to pin 8; since the on-board LED is connected to pin 13, arduino's "Switch State" must be set to 33 (1 for pin 8 + 32 for pin 13).
 
-Additionally, analog inputs A0 to A2 are connected to 3-way connectors (analog input, 5V, ground) in order to read hall effect sensors outputs. This is used to encode the position of several mechanical switches.
+Additionally, analog inputs A0 to A2 are connected to 3-way connectors in order to read Hall effect sensors (A1324LUA-T, Digikey #620-1432-ND) outputs. This is used to encode the position of several mechanical switches.
+
+Function   | Connector (9-pol female) | Cable    | PCB header
+-----------|--------------------------|----------|-------------
++5V        |                        1 | white    | P2/1	
+A0, A1, A2 |                        2 | green    | P4/1	
+GND        |                        3 | brown    | P2/2	
 
 
 # Computer

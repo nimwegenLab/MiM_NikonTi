@@ -1,0 +1,9 @@
+// from http://micro-manager.3463995.n2.nabble.com/Delay-before-starting-MDA-td7585759.html
+// all settings (time points, positions, save) must be set in the MDA window
+// runnables can be attached by running other scripts beforehand
+
+long waitSec = 15;
+
+// DO NOT EDIT BELOW
+gui.sleep(waitSec * 1000);
+gui.runAcquisition();
