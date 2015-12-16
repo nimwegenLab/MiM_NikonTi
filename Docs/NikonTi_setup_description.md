@@ -121,6 +121,9 @@ Flat field pictures have been saved before and after adjusting the diaphragms.
 - Improved DIA TTL control: Trek5 USB-TTL box (unreliable) replaced by an Arduino Uno with default AOTF firmware from MM.
 - Added 3 Hall effect sensor to the Arduino: analog inputs A0 to A2 will be used to encode the position of the magnifying lens and the position of the 2 ND filters on fluo excitation light path.
 
+## 20151214 (Thomas)
+- Upgraded Hamamatsu DCAM API to 15.12.4823 (fix the water / air cooling display in DCAM config)
+
 
 ## To do
 - measure power for all filter sets (e.g. at 2")
