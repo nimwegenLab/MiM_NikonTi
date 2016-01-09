@@ -17,6 +17,7 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 Model: SPECTRAX-6_LCR_SA
 SN: 3486
+connected to the computer's serial port (no USB converter)
 
 By default, excitation filters are placed in the SpectraX.
 
@@ -71,6 +72,7 @@ Hamamatsu ORCA-Flash4.0
 Model: C11440-22CU  
 SN: 720701
 
+Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 Camera cooler: CoolCare (set to 20ºC)
 
 ## Arduino
@@ -86,7 +88,16 @@ GND        |                        3 | brown    | P2/2
 
 
 # Computer
-Dell Optiplex 990 (pz-kben01-pdw06)
+Dell Precision Tower 7910 (pz-kben01-pdw08)
+System drive (C): SSD (256gb)
+Data drive (D): RAID10 volume (2tb; hardware RAID powered by `MegaRAID SAS 9361-8i` PCIe controller and 4 SAS HD)
+USB3 connection for Flash4 camera: only on PCIe USB3 ports (card U3-PCIE1XG202)
+
+
+# Temperature regulation
+Life Imaging Services "The Cube 2"
+SN: 12400
+
 
 
 # Maintenance
@@ -123,6 +134,15 @@ Flat field pictures have been saved before and after adjusting the diaphragms.
 
 ## 20151214 (Thomas)
 - Upgraded Hamamatsu DCAM API to 15.12.4823 (fix the water / air cooling display in DCAM config)
+
+## 20160108 (Thomas & Guillaume)
+- new `System` property in MM (set arduino and camera cooling; better than using MMstartup.bsh)
+- connected new computer
+    - SpectraX connected to serial port (COM1) instead of using a USB adapter
+    - Updated Nemesys software to last version
+    - renamed Arduino serial adapter to `ArduinoDIA`, verbose mode disabled
+- connected a second arduino (`Arduino SpectraX`) to test the stability before iplementing SpectraX TTL control via arduino
+- tested streaming acquisiiton to RAID: 1000 frames at 25fps in 30sec (ca. 7gb in total)
 
 
 ## To do

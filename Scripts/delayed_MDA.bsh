@@ -5,5 +5,7 @@
 long waitSec = 15;
 
 // DO NOT EDIT BELOW
+print("Acquisition will start in " + waitSec + " sec...");
 gui.sleep(waitSec * 1000);
 gui.runAcquisition();
+
