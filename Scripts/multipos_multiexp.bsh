@@ -12,8 +12,8 @@
 
 String transChannel = " DIA (GFP)";
 int transExposure = 100;
-String[] fluoChannels = {"GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%","GFP 17%"};
-int[] fluoExposures = {1600,1600,1600,1600,1600,1600,1600,1600};
+String[] fluoChannels = {"GFP 17%","GFP 17%","GFP 17%","GFP 17%"," DIA (GFP)"};
+int[] fluoExposures = {2000,2000,2000,2000,10};
 
 // DO NOT EDIT BELOW
 import org.micromanager.api.PositionList;
