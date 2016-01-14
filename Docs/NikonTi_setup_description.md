@@ -98,6 +98,7 @@ USB3 connection for Flash4 camera: only on PCIe USB3 ports (card U3-PCIE1XG202)
 Life Imaging Services "The Cube 2"
 SN: 12400
 
+The integrated temperature controller is [Omron E5CN-H](https://www.ia.omron.com/products/family/1946/).
 
 
 # Maintenance
