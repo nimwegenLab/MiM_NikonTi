@@ -17,7 +17,7 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 Model: SPECTRAX-6_LCR_SA
 SN: 3486
-connected to the computer's serial port (no USB converter)
+connected to the computer's serial port (no USB converter). Serial communication (through MM device adapter) is used only to set the intensity; LEDs are switched ON and OFF using TTL signals produced by the Arduino box.
 
 By default, excitation filters are placed in the SpectraX.
 
@@ -76,7 +76,20 @@ Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 Camera cooler: CoolCare (set to 20ºC)
 
 ## Arduino
-A Arduino Uno programmed with MM default AOTF firmware is used to control the state of the diascopic illumination LED (TTL control). The TTL output is connected to pin 8; since the on-board LED is connected to pin 13, arduino's "Switch State" must be set to 33 (1 for pin 8 + 32 for pin 13).
+An Arduino Uno programmed with MM default firmware (aka AOTF) is used as a global shutter to switch the diascopic illumination LED (TTL control) and the SpectraX's LEDs. Using this setup, it is possible to change the illumination in a "sequencable" manner (i.e. using hardware triggering). Pin 2 is connected to a BNC connector (through a level shifter SN74HCT125 connected for 3.3V > 5V) for trigger input at 3.3V. Pins 8-10 are connected to a demux-inverter, itself connected to the DB15HD connector (SpectraX triggering) and to a BNC connector (output for DIA triggering). A custom DB15HD cable is used since VGA cables have unspecified pins (e.g. 11) which are usually connected to the ground.
+
+Channel | DB15 pin        | SwitchState
+--------|-----------------|-------------
+Violet  | 13              | 1
+Blue    | 12              | 2
+Cyan    | 3               | 3
+Teal    | 11              | 4 
+Green   | 2               | 5
+Red     | 1               | 6
+GND     | 6-8             | -   
+GND     | 10 (other wire) | -
+DIA     | BNC (inverted)  | 7
+
 
 Additionally, analog inputs A0 to A2 are connected to 3-way connectors in order to read Hall effect sensors (A1324LUA-T, Digikey #620-1432-ND) outputs. This is used to encode the position of several mechanical switches.
 
@@ -85,6 +98,7 @@ Function   | Connector (9-pol female) | Cable    | PCB header
 +5V        |                        1 | white    | P2/1	
 A0, A1, A2 |                        2 | green    | P4/1	
 GND        |                        3 | brown    | P2/2	
+
 
 
 # Computer
@@ -144,6 +158,9 @@ Flat field pictures have been saved before and after adjusting the diaphragms.
     - renamed Arduino serial adapter to `ArduinoDIA`, verbose mode disabled
 - connected a second arduino (`Arduino SpectraX`) to test the stability before iplementing SpectraX TTL control via arduino
 - tested streaming acquisiiton to RAID: 1000 frames at 25fps in 30sec (ca. 7gb in total)
+
+## 20160119
+- new arduino shutter with a custom shield to control the DIA LED and the SpectarX using TTL (through a demux connected to pins 8-10). Configuration reworked accordingly.
 
 
 ## To do
