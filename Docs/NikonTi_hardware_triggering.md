@@ -7,37 +7,6 @@ author:
   affiliation: Biozentrum, Basel University
 date: 'January-March 2016'
 output: html_document
-references:
-- id: edelstein2014advanced
-  type: article-journal
-  title: Advanced methods of microscope control using μManager software
-  container-title: Journal of Biological Methods
-  volume: '1'
-  issue: '2'
-  DOI: 10.14440/jbm.2014.36
-  ISSN: 2326-9901
-  language: ENG
-  author:
-    - family: Edelstein
-      given: Arthur D.
-    - family: Tsuchida
-      given: Mark A.
-    - family: Amodaj
-      given: Nenad
-    - family: Pinkard
-      given: Henry
-    - family: Vale
-      given: Ronald D.
-    - family: Stuurman
-      given: Nico
-  issued:
-    date-parts:
-      - - 2014
-  PMID: '25606571'
-  PMCID: PMC4297649
-  container-title-short: J Biol Methods
-...
-
 ---
 
 
@@ -127,5 +96,38 @@ DIA     | BNC (inverted)  | 7
 
 <!-- ## Remarks -->
 
+
 ### References
 <!-- bibliography is automatically put at the end -->
+
+---
+references:
+- id: edelstein2014advanced
+  type: article-journal
+  title: Advanced methods of microscope control using μManager software
+  container-title: Journal of Biological Methods
+  volume: '1'
+  issue: '2'
+  DOI: 10.14440/jbm.2014.36
+  ISSN: 2326-9901
+  language: ENG
+  author:
+    - family: Edelstein
+      given: Arthur D.
+    - family: Tsuchida
+      given: Mark A.
+    - family: Amodaj
+      given: Nenad
+    - family: Pinkard
+      given: Henry
+    - family: Vale
+      given: Ronald D.
+    - family: Stuurman
+      given: Nico
+  issued:
+    date-parts:
+      - - 2014
+  PMID: '25606571'
+  PMCID: PMC4297649
+  container-title-short: J Biol Methods
+...
