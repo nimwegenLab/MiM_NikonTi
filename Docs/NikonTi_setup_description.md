@@ -76,7 +76,7 @@ Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 Camera cooler: CoolCare (set to 20ºC)
 
 ## Arduino
-An Arduino Uno programmed with MM default firmware (aka AOTF) is used as a global shutter to switch the diascopic illumination LED (TTL control) and the SpectraX's LEDs. Using this setup, it is possible to change the illumination in a "sequencable" manner (i.e. using hardware triggering). Pin 2 is connected to a BNC connector (through a level shifter SN74HCT125 connected for 3.3V > 5V) for trigger input at 3.3V. Pins 8-10 are connected to a demux-inverter, itself connected to the DB15HD connector (SpectraX triggering) and to a BNC connector (output for DIA triggering). A custom DB15HD cable is used since VGA cables have unspecified pins (e.g. 11) which are usually connected to the ground.
+An Arduino Uno programmed with MM default firmware (aka AOTF) is used as a global shutter to switch the transmitted light LED (TTL control) and the SpectraX's LEDs. Using this setup, it is possible to change the illumination in a "sequencable" manner (i.e. using hardware triggering). Pin 2 is connected to a BNC connector (through a level shifter SN74HCT125 connected for 3.3V > 5V) for trigger input at 3.3V. Pins 8-10 are connected to a demux-inverter, itself connected to the DB15HD connector (SpectraX triggering) and to a BNC connector (output for DIA triggering, through an inverter since active-high). A custom DB15HD cable is used since VGA cables have unspecified pins (e.g. 11) which are usually connected to the ground.
 
 Channel | DB15 pin        | SwitchState
 --------|-----------------|-------------
