@@ -160,7 +160,7 @@ Flat field pictures have been saved before and after adjusting the diaphragms.
 - tested streaming acquisiiton to RAID: 1000 frames at 25fps in 30sec (ca. 7gb in total)
 
 ## 20160119
-- new arduino shutter with a custom shield to control the DIA LED and the SpectarX using TTL (through a demux connected to pins 8-10). Configuration reworked accordingly.
+- new arduino shutter with a custom shield to control the DIA LED and the SpectraX using TTL (through a demux connected to pins 8-10). Configuration reworked accordingly.
 
 
 ## To do

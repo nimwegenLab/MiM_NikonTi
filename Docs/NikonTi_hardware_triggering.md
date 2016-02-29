@@ -33,6 +33,10 @@ This clearly illustrates that running the camera in sequence mode with hardware 
 
 ## Integrating several TTL-controlled light sources into a single sequencable device
 
+### using an arduino board to control an illumination device through TTL
+how to replace a USB-TTL controllerusing an arduino...
+
+
 ### Overview
 In our setup, the camera is an Hamamatsu Flash4, the transmitted light illumination is produced by a pE-100 (CoolLED) and the epifluorescence illumination by a Spectra X (Lumencor). In principle, the approach described below could be taken to control any set of TTL-controlled light sources.
 
@@ -72,12 +76,43 @@ GND     | 10 (other wire) | -
 DIA     | BNC (inverted)  | 7
 
 
-## Using camera trigger outputs for hardware-triggered control of illumination
+
+## hardware triggering
+
+### Flash4 trigger output explained
+
+When running an MDA, micromanager detects whether devices are sequenceable, meaning that they can internally store series of states that they then reach upon successive triggers. If all devices are sequenceable, the camera runs in streaming mode and sends the triggers to other devices. On the Flash4 you can set each of the three triggers (numbered [0], [1] and [2]) independently and each time an image is acquired, those triggers will be sent out. There are several options for each trigger (explained in detail but not always very clearly in the Hamamatsu manual): 
+-Trigger polarity: choose positive or negative depending on what the receiving device needs. Apparently you need positive for the ASI stage 
+-Trigger kind: you will probably use either the "exposure" or the "programmable" options. In "exposure" the trigger goes active when all the pixel rows are exposing. In a CMOS each row of pixels start exposure with a slight delay compared to its neighbor (starting from the middle row), and it takes about 10ms to start exposure of all rows. So your trigger will be low for 10ms and high the rest of the time and your stage will move at the moment where all pixels have started exposing. This is probably not an ideal solution. In "programmable" you can precisely define the pulse that you want to send with the following options. 
+-Trigger period: sets the duration of the "programmable" trigger 
+-Trigger delay: sets a delay before a pulse is sent. 
+-Trigger source: you have two choices on how to set the delay. Either its a delay since the end of read-out ("Readout end" mode), i.e. from the moment the last row of pixels of the current image has been read out by the camera. Or its a delay since the start of readout ("Vsync" mode), i.e since the moment where the first row of pixels of the current image is read-out (figure 10-12 of the camera manual explains this with graphics). 
+
+Note that period, delay and source only affect triggers in "programmable" mode. 
+
+So for example you could use the trigger [0] ("1" one the back of the camera) with: positive polarity, "Readout end" mode, zero delay and a pulse of 10ms. Like that, at the end of every picture acquisition, a 10ms pulse is sent to your stage (I guess length doesn't matter as the stage reacts to raising edge). Be aware that since the camera works in streaming mode (it overlaps image acquisitions), whatever your choice of delays, you will always be moving the stage while pixels are exposing. This is not a problem only if your exposure time is quite larger than the time it takes your stage to move. To avoid that, you'd also have to synchronize illumination with a camera trigger and only illuminate when the stage is not moving, but that involves a bit more work. 
 
 
+### first use case: illuminate sample only during camera exposure
+
+blanking with global exposure trigger (not sequencable)
+effective is -10ms for full frame
+
+### Using camera trigger outputs for hardware-triggered control of illumination
+
+aim: sequencable MDA with illumination during global exposure
+- requires:
+  + arduino sequencable ON
+  + trigger kind "exposure" and polarity positive
+  + auto-shutter OFF and blanking OFF
+- blanking is superseeded by sequencable. NB: mysteriously when auto-shutter is ON, blanking disables spurious illumination (not during camera exposure)
+- using global exposure trigger generates additional pulse(s) at the end of the sequence (which doesn't produce an image). However, the triggering sequence is restarted from the beginning at the next frame / position...
 
 
-## Hardware-triggered control of z positions
+### Hardware-triggered control of z positions
+
+aim: sequencable MDA with illumination during global exposure and piezo moves during "partial" frame exposure (must take < 10ms) 
+
 
 
 
