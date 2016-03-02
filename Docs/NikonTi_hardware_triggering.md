@@ -155,6 +155,8 @@ Notes:
 
 ### Using camera trigger outputs for hardware-triggered control of illumination
 
+Here one wants to achieve harware-triggering in an MDA acquisition, i.e. the camera is a master running in streaming mode that drives all other devices through their sequence of states. One needs:
+
 - A light source controlld by Arduino-Switch
 - A camera trigger output (e.g. [0]) connected to pin2 of Arduino
 - Camera Trigger Polarity[0] = Positive
