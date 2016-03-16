@@ -33,11 +33,44 @@ This clearly illustrates that running the camera in sequence mode with hardware 
 
 ## Integrating several TTL-controlled light sources into a single sequencable device
 
-### using an arduino board to control an illumination device through TTL
-how to replace a USB-TTL controllerusing an arduino...
+### Basic Arduino Setup
+In order to control our specific setup, which includes two light sources synchronized with the camera, we had to design a very specific Arduino shield. For clarity's sake, we first describe here the simplest Arduino-based setup that can be used to control for example a single illumination source by TTL.
 
+#### First steps
 
-### Overview
+A specific Arduino software has been written to allow the use of an Arduino microcontroller in micromanager. The first thing to do is to flash the Arduino with that software. Then the Arduino has to be installed in micromanager like any other device using the Device Manager. There is a an Arduino Hub to install and several peripheral devices can be chosen. Only Arduino-Switch and Arduino-Shutter are needed.
+
+#### Controlling a ligth source with Arduino
+One should see the Arduino like any other device with its micromanager dedicated device adapter. As one would e.g. switch filter cubes on a filter wheel, here one switches Arduino pins ON and OFF. **Six pins (8,9,10,11,12,13) are programmed and can be controlled through the Arduino-Switch-State property by setting the latter to a value between 0 and 63**. The single pins (8,9,10,11,12,13) are switched ON using the values (1,2,4,8,16,32). A pin pattern, i.e. multiple pins switched ON simultaneously, is achieved by just summing up the single pin values. For example pins 8 and 11 are switched ON simultaneously by having Switch-State=9 (1+8) (see https://micro-manager.org/wiki/Arduino for more details). The Arduino can be used as a shutter device (like any other shutter) using the Arduino-Shutter device.
+
+We only need a single pin, e.g. pin8, to switch a single light source ON and OFF. If the light source has a BNC connector, one would thus need the following very simple Arduino setup (A):
+![basic_arduino](figs/Basic_Arduino.png)
+
+We indicated in blue and red the information provided through micromanager settings: the pin pattern (Switch-State) and the Shutter status (Arduino-Shutter) that effectively combine to an AND gate. Only when Switch-State=1 AND Arduino-Shutter=ON, does the light source turn ON. However the setup is still centrally controlled by the computer: the computer asks first the Arduino to turn the ligth on, then the camera to take a picture, and finally again the Arduino to turn the light off. This computer/device communication leads to delays, which for example prolong the sample exposure and induce unnecessary photodammage.
+
+#### Synchronizing the camera and the illumination source through Arduino
+To minimize exposure by precisely synchronizing light source and camera, one can have the camera talking directly to the light source. Most modern cameras are capable of sending TTL pulses at specific time points during each frame acquisition (see below under "Flash4 trigger explained" for more details). The idea is therefore to use that camera signal to control when the Arduino pin pattern is active or inactive (blanked). We imagine for the moment that the camera output TTL is ON (high) when exposing and OFF (low) otherwise.
+
+The simplest way of achieving this is to connect the camera trigger output as input to the Arduino pin2 (see figure above, part B). The Arduino has been programmed in such a way that pin8-13 are all OFF if pin2 is OFF (camera not exposing), and conversely pin8-13 are set to the current pattern if pin2 is ON (camera exposing). This effectively amounts to replace the slow computer genereated shuttering (A, blue line) with a fast camera generated shuttering (B, red light). **This feature using pin2 for blanking is only active when the Arduino-Switch property Blanking-Mode is turned ON.**
+
+In this configuration, it is ensured that illumination only happens exactly when the camera is exposing, both in capture and stremaing modes. However it is still the computer that sends commands every time a device has to change state (e.g. switch between two light channels), making timings unreliable. Imagine for example that one wants to acquire a fast two-channels image through the MDA with the setup of the figure below. The computer is going to: 1) set Arduino-Switch=1 (red light), 2) order the camera to take a picture, 3) set Arduino-Switch=2 (green light), 4) order again the camera to take a picture. Hence four slow computer-device communications.
+![twocol_arduino](figs/Two_color_MM_Arduino_schema.png)
+
+#### Slaving the setup to the camera
+
+To avoid needing the computer to tell devices what to do, the latter need to be able to store sequences of states themselves. Also, in order to synchronize the setup using TTL pulses, those devices need to be able to go through their stored sequence of states upon receiving successive TTL triggers. In micromanager words, devices with those abilities are called sequenceable. **For the Arduino-Switch device this property is activated by setting the Arduino-Switch-Sequence property to ON** (other sequenceable devices have a similar property).
+
+As we have seen above, when run in streaming mode, the camera uses its internal clock to acquire a series of frames. It also still sends a TTL at each frame acquisition. If all devices are sequenceable and connected to the camera via TTL, and the camera itself runs in streaming mode, each device will automatically go through its stored sequence of states upon receiving the successive camera TTL triggers. Hence the camera has become the master of the setup, and the only remaining task required from the computer is to give the GO! for the complete sequence acquisition. In our previous example, the sequence [1,2] is stored on the Arduino-Switch, the computer gives the camera a GO! to acquire a series of two frames in streaming mode and then: 1) camera starts acquiring frame 1 and sends a TTL to Arduino-Switch, which goes to its first stored value Arduino-Switch-State=1 and turns Red illumination ON, 2) exposure is done, camera trigger is OFF (low), light turns OFF, 3) camera starts acquiring frame 2, sends a TTL to Arduino-Switch, which progresses to Arduino-Switch-State=2 and Green ligth turns ON, 4) exposure is done and light turns OFF.
+
+What happens in practice can be summarized as this: 1) one chooses acqusition parameters (illumination settings, number of planes etc.) in the MDA, 2) micromanager transparently transforms those parameters into a sequence of states for each device, 3) the sequences are sent to each device and stored on them, 4) the camera starts acquisition in streaming mode (no communication with computer), 5) every time it takes a picture, the camera sends out a TTL pulse, 6) each device receiving a TTL pulse progresses in its sequence of states.
+
+The only limitation of this setup is the need to acquire all frames at the same exposure time, as changing exposure time is time consuming and cannot be done while in camera streaming mode.
+
+#### Caveats for Arduino shield design
+
+The simple schema presented in the above figure is very simplistic and will probably never be usable as such for two reasons important to consider when designing an Arduino setup. First, the triggers have to have the correct polarity. For example some devices are ON when voltage is low and OFF when voltage is high, while others have the inverse behavior. Hence one has to carefully verify the polarity of the sent and received signals. Second, some TLL work at 5V while others work at 3V (trigger level). Again, one should verify what inputs/ouputs the devices generate/need. Notice that Arduino works at 5V. For simplicity's sake, in the simple examples above, we assumed positive polarity at 5V for all components. In the detailed description of our setup below, several level and polarity changes are needed and the way to achieve them explained.
+
+### Our specific setup
 In our setup, the camera is an Hamamatsu Flash4, the transmitted light illumination is produced by a pE-100 (CoolLED) and the epifluorescence illumination by a Spectra X (Lumencor). In principle, the approach described below could be taken to control any set of TTL-controlled light sources.
 
 While there is a device adapter for the Spectra X, the pE-100 require a USB-TTL converter, for instance an Arduino board with the default firmware (a.k.a. AOTF). However, we need the Spectra X to be "sequencable" and, in order to run hardware-triggered MDA with both transmitted light and epifluorescence, to combine the two light sources into a single "sequencable" device. Hence we created a simple custom extension shield allowing to control which channel is active using TTL signals. Hence the shield has one BNC connector to trigger the pE-100 and DB-15HD connector to trigger each LED of the Spectra X individually. The intensity of the Spectra X is still set using the dedicated device adapter. 
@@ -77,42 +110,74 @@ DIA     | BNC (inverted)  | 7
 
 
 
-## hardware triggering
+## Hardware triggering applied
 
 ### Flash4 trigger output explained
 
-When running an MDA, micromanager detects whether devices are sequenceable, meaning that they can internally store series of states that they then reach upon successive triggers. If all devices are sequenceable, the camera runs in streaming mode and sends the triggers to other devices. On the Flash4 you can set each of the three triggers (numbered [0], [1] and [2]) independently and each time an image is acquired, those triggers will be sent out. There are several options for each trigger (explained in detail but not always very clearly in the Hamamatsu manual): 
--Trigger polarity: choose positive or negative depending on what the receiving device needs. Apparently you need positive for the ASI stage 
--Trigger kind: you will probably use either the "exposure" or the "programmable" options. In "exposure" the trigger goes active when all the pixel rows are exposing. In a CMOS each row of pixels start exposure with a slight delay compared to its neighbor (starting from the middle row), and it takes about 10ms to start exposure of all rows. So your trigger will be low for 10ms and high the rest of the time and your stage will move at the moment where all pixels have started exposing. This is probably not an ideal solution. In "programmable" you can precisely define the pulse that you want to send with the following options. 
--Trigger period: sets the duration of the "programmable" trigger 
--Trigger delay: sets a delay before a pulse is sent. 
--Trigger source: you have two choices on how to set the delay. Either its a delay since the end of read-out ("Readout end" mode), i.e. from the moment the last row of pixels of the current image has been read out by the camera. Or its a delay since the start of readout ("Vsync" mode), i.e since the moment where the first row of pixels of the current image is read-out (figure 10-12 of the camera manual explains this with graphics). 
+As we have seen in the previous sections, when running a hardware-triggered MDA with sequenceable devices, the camera runs as fast as possible in streaming mode. Also, the camera has to generate a TTL at each frame to drive all devices through their sequence. Modern cameras propose different types of trigger outputs. We describe here settings specific to the Hamamatsu OrcaFlash4 V2 camera.
 
-Note that period, delay and source only affect triggers in "programmable" mode. 
+#### How a CMOS camera works
+In order to understand the different types of triggers, one has first to understand a few basic features of CMOS cameras, and in particular the importance of pixel rows. After exposure, the information is readout from the CMOS chip row after row, starting from the central row and progressing towards the chip top and bottom row. Readout takes around 10us/row, and therefore there's a time delay of 10ms between readout of the central and edge pixel rows (for 2048/2 rows). Since in streaming mode the camera operates non-stop, it starts exposing each row right after readout, which means that while the central row has started exposure for the next frame, rows close to the edge are still exposing for the current frame. Hence pixel rows are exposing for the same total time but not at the same time (see figure below).
 
-So for example you could use the trigger [0] ("1" one the back of the camera) with: positive polarity, "Readout end" mode, zero delay and a pulse of 10ms. Like that, at the end of every picture acquisition, a 10ms pulse is sent to your stage (I guess length doesn't matter as the stage reacts to raising edge). Be aware that since the camera works in streaming mode (it overlaps image acquisitions), whatever your choice of delays, you will always be moving the stage while pixels are exposing. This is not a problem only if your exposure time is quite larger than the time it takes your stage to move. To avoid that, you'd also have to synchronize illumination with a camera trigger and only illuminate when the stage is not moving, but that involves a bit more work. 
+![trigger_fig](figs/Triggers.png)
 
+All possible triggers are set respective to the exposure/readout timings mentioned above, and are explained in detail in the OrcaFlash4 manual. We focus here only on potentially useful triggers for fast MDA acquisitions. We also assume that the camera is working in streaming mode. Note that the trigger level output is 3V. In what follow we call 3V "high" and 0V "low". To simplifiy the discussion, we assume that polarity (see below) is positive, and thus "trigger high" means that the trigger is active.
 
-### first use case: illuminate sample only during camera exposure
+Within micromanager, the OrcaFlash4 camera has several trigger related properties. Since the camera has three trigger outputs (numbered 1-3 on the back of the camera) all the options appear three times and are numbered [0], [1], [2]. Each trigger output can be set independently from the others. The available options are :
 
-blanking with global exposure trigger (not sequencable)
-effective is -10ms for full frame
+**Trigger polarity**: Defines the polarity of the pulse. If positive, the signal is low by default and the pulse is high. If negative the default is high and the pulse low.
+
+**Trigger kind**: Several options are available, the most usefull being "Exposure" and "Programmable". In **"Exposure"** mode (see figure, first trigger example) the trigger is high when all the pixel rows are exposing **simultaneously**. We have seen above that it takes 10ms to start exposure of all rows. This means that if exposure time is 50ms, the trigger will be low for 10ms and high for the remaining 40ms. In **"Programmable"** mode, a precisely defined pulse can be generated using the additional properties below.
+
+**Trigger Period**: Sets the duration of the "Programmable" trigger pulse
+
+**Trigger Delay**: Sets a time delay before emitting the pulse.  
+
+**Trigger Source**: The above delay counts time since a specific reference event of the frame acquisition process. Trigger Source gives the choice between two reference events. In **"Readout end"** mode (see figure, second trigger example), time is counted from the end of readout, i.e. from the moment the last row of pixels of the current image has been read out by the camera. From the moment where the central row has been read out, it takes 10ms before reading out the last row. Hence after acquiring a frame, the earliest time point where a trigger can be generated is 10ms into acquisition of the next frame. In **"Vsync"** mode (see figure, third trigger example), time is counted from the moment where the central row of pixels has been exposed and read out. For a given frame, since the first row starts exposing at "time = 0" and stops at "time = exposure time", the earliest time point where a trigger can be generated is equal to the exposure time.
+
+Note that Period, Delay and Source properties only affect triggers in "Programmable" mode. Their values are ignored otherwise.
+
+### First use case: Simple camera-light source synchronization 
+
+Here the setup is not used in the MDA sequenceable mode (e.g. just for snaping images or in MDA with channels having different exposure times) but one still wants to make sure the sample is only illuminated when the camera is actually exposing. The following features are needed:
+
+- A light source controlld by Arduino-Switch
+- A camera trigger output (e.g. [0]) connected to pin2 of Arduino
+- Camera Trigger Polarity[0] = Positive
+- Camera Trigger Kind[0] = Exposure
+- Arduino-Switch-Blanking-Mode ON
+- The other trigger properties are not used.
+
+Notes:
+
+- With the Trigger in Exposure mode, the effective illumination time is 10ms shorter than the explicit value used in micromanager
+- During the 10ms without illumination, some pixel row are still exposing. Therefore the microscopy room should be dark.
 
 ### Using camera trigger outputs for hardware-triggered control of illumination
 
-aim: sequencable MDA with illumination during global exposure
-- requires:
-  + arduino sequencable ON
-  + trigger kind "exposure" and polarity positive
-  + auto-shutter OFF and blanking OFF
-- blanking is superseeded by sequencable. NB: mysteriously when auto-shutter is ON, blanking disables spurious illumination (not during camera exposure)
-- using global exposure trigger generates additional pulse(s) at the end of the sequence (which doesn't produce an image). However, the triggering sequence is restarted from the beginning at the next frame / position...
+Here one wants to achieve harware-triggering in an MDA acquisition, i.e. the camera is a master running in streaming mode that drives all other devices through their sequence of states. One needs:
+
+- A light source controlld by Arduino-Switch
+- A camera trigger output (e.g. [0]) connected to pin2 of Arduino
+- Camera Trigger Polarity[0] = Positive
+- Camera Trigger Kind[0] = Exposure
+- Arduino-Switch-Blanking-Mode OFF
+- Auto-shutter OFF (the auto-shutter seems to superseed the sequenceable setting)
+- Arduino-Switch-Sequence ON
+- The same exposure time for all channels
+- A multi-channel filter cube. Since the filter cube touret is slow it cannot be used as a sequenceable device and the wole acquisition goes back to the situation described above.
+
+Notes: 
+
+- With the Trigger in Exposure mode, the effective illumination time is 10ms shorter than the explicit value used in micromanager
+- During the 10ms without illumination, some pixel row are still exposing. Therefore the microscopy room should be dark.
+- Blanking is superseeded by sequencable. However mysteriously when auto-shutter is ON, blanking disables spurious illumination (not during camera exposure)
+- Using the trigger in Exposure mode generates additional pulse(s) at the end of the sequence (which don't produce an image). However, the triggering sequence is correctly restarted from the beginning at the next frame / position...
 
 
 ### Hardware-triggered control of z positions
 
-aim: sequencable MDA with illumination during global exposure and piezo moves during "partial" frame exposure (must take < 10ms) 
-
+In construction.
 
 
 
