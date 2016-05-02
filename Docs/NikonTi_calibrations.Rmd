@@ -1,7 +1,7 @@
 ---
-title: "Calibrations for [vng] Nikon Ti"
+title: "Calibrations for `vng` Nikon Ti"
 author: Thomas Julou
-output: html_document
+output: github_document
 ---
 
 
@@ -21,7 +21,6 @@ Using the Excite powermeter provided by IMCF (centered on the 100x objective usi
 
 - 20150130: default aperture and field shutters settings used.
 - 20150201: aperture (resp. field) shutters adjusted to most homogeneous (resp. smallest without vigneting) pictures.  
-NB: I adjusted the angle of the light guide connector (with tape and paper spacers), so that the spot produced on the centering tool is centered when the aperture diaphragm is open. I then adjusted both field and aperture shutters positions and openings. For the field shutter, all open is required to avoid vigneting at 100x with Flash4. For the aperture shutter, closing from the all open position rapidly results in non-uniform illumination.
 
 ```{r}
 pw_setting <- data.frame(matrix(ncol=3, byrow=TRUE, data=c(
@@ -155,5 +154,58 @@ At intermediate illumination, shot noise dominates and its variance equals the s
   i.e. $\sigma_{hi}^2 = \sigma_{lo}^2 + k (S_t – S_o)$ \  
   i.e. $(\sigma_{hi}^2-\sigma_{lo}^2) - k (S_t – S_o) = 0$
 
-Typical photon transfer curve analysis consists in estimating the read noise $\sigma_r$ and the conversion gain $k$. $\sigma_r$ is best estimated as the asymptote of $log(\sigma_t^2) = f(log(S_t – S_o))$. $k$ is best estimated as the slope of the line in $\sigma_t^2 = f(S_t – S_o)$ (acquired in the illumination regime where shot noise dominate: $S_t – S_o \gg \sigma_r^2$). This can be rephrased as a minimization problem as in Eq. 17 of the supplementary material of [@huang2013video]: $\hat{k} = argmin \sum_{i} \big( (\sigma_{hi, i}^2-\sigma_{lo}^2) - k (S_{t, i} – S_o) \big)^2$ for a sequence (indexed by $i$) of intensity time series of a given pixel.
+Typical photon transfer curve analysis consists in estimating the read noise $\sigma_r$ and the conversion gain $k$. $\sigma_r$ is best estimated as the asymptote of $log(\sigma_t^2) = f(log(S_t – S_o))$. $k$ is best estimated as the slope of the line in $\sigma_t^2 = f(S_t – S_o)$ (acquired in the illumination regime where shot noise dominate: $S_t – S_o \gg \sigma_r^2$). This can be rephrased as a minimization problem as in Eq. 17 of the supplementary material of [@huang2013videorate]: $\hat{k} = argmin \sum_{i} \big( (\sigma_{hi, i}^2-\sigma_{lo}^2) - k (S_{t, i} – S_o) \big)^2$ for a sequence (indexed by $i$) of intensity time series of a given pixel.
 
+### References
+<!-- bibliography is automatically put at the end -->
+
+
+---
+references:
+- id: huang2013videorate
+  type: article-journal
+  title: Video-rate nanoscopy using sCMOS camera-specific single-molecule localization algorithms
+  container-title: Nature Methods
+  page: 653-658
+  volume: '10'
+  issue: '7'
+  source: PubMed
+  abstract: 'Newly developed scientific complementary metal-oxide semiconductor (sCMOS) cameras have the potential to dramatically accelerate data acquisition, enlarge the field of view and increase the effective quantum efficiency in single-molecule switching nanoscopy. However, sCMOS-intrinsic pixel-dependent readout noise substantially lowers the localization precision and introduces localization artifacts. We present algorithms that overcome these limitations and that provide unbiased, precise localization of single molecules at the theoretical limit. Using these in combination with a multi-emitter fitting algorithm, we demonstrate single-molecule localization super-resolution imaging at rates of up to 32 reconstructed images per second in fixed and living cells.'
+  DOI: 10.1038/nmeth.2488
+  ISSN: 1548-7105
+  language: eng
+  author:
+    - family: Huang
+      given: Fang
+    - family: Hartwich
+      given: Tobias M. P.
+    - family: Rivera-Molina
+      given: Felix E.
+    - family: Lin
+      given: Yu
+    - family: Duim
+      given: Whitney C.
+    - family: Long
+      given: Jane J.
+    - family: Uchil
+      given: Pradeep D.
+    - family: Myers
+      given: Jordan R.
+    - family: Baird
+      given: Michelle A.
+    - family: Mothes
+      given: Walther
+    - family: Davidson
+      given: Michael W.
+    - family: Toomre
+      given: Derek
+    - family: Bewersdorf
+      given: Joerg
+  issued:
+    date-parts:
+      - - 2013
+        - 7
+  PMID: '23708387'
+  PMCID: PMC3696415
+  container-title-short: Nat. Methods
+...
