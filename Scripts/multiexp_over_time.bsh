@@ -1,0 +1,65 @@
+// modified from manualAcq.bsh
+// all settings (time points, positions, save) but channels must be set in the MDA window
+// must have at least 2 channels defined in the MDA window
+//// the first channel is not modified over time, 
+//// other channels have their exposure set by stepFluoExposures (the metadata are not saved)
+// must be run (every time!) before starting a MDA
+// the acquisition order must be TPC
+
+
+int[] stepDurations = {360, 360, 360, 360, 360, 360}; // (in min)
+int[] stepFluoExposures = {20,160,310,610,1210,2410}; // (in ms)
+
+// DO NOT EDIT BELOW
+acq.clearRunnables();
+
+runnable = new Runnable() {
+	import org.micromanager.api.PositionList;
+	PositionList pl = gui.getPositionList();
+	int fr_count = 0;
+	int st_count = 0;
+   int ch_count = 0;
+   int pos_count = 0;
+
+   stepCumulDurations = stepDurations;
+   stepCumulDurations[0] = stepDurations[0] * 1000*60;
+   for (int i = 1; i < stepCumulDurations.length; i++) {
+   	stepCumulDurations[i] = stepCumulDurations[i-1] + stepDurations[i]*1000*60;
+   }
+	channels = acq.getChannels();
+   start = System.currentTimeMillis();
+   
+   public void run() {
+   	print(pos_count);
+		// update the step index if required
+	   elapsedTime = System.currentTimeMillis() - start;
+	   if (elapsedTime > stepCumulDurations[st_count] && pos_count==0) {
+			//print("elapsedTime: " + elapsedTime);
+			//print("cumul:" + stepCumulDurations[st_count]);
+			while (elapsedTime > stepCumulDurations[st_count] && st_count < stepDurations.length-1) {
+				st_count++;
+			}
+			//print("step: "+st_count);
+	   }
+      
+      if (ch_count > 0) { // keep first channel (TRANS) untouched			
+	      mmc.setExposure(stepFluoExposures[st_count]);
+      }
+
+      // update indices
+		++fr_count;
+      ++ch_count;
+		if (ch_count >= channels.size()) {
+			ch_count = 0;
+			++pos_count;
+		}
+		if (pos_count >= pl.getNumberOfPositions()) {
+			pos_count = 0;
+		}
+	}
+};
+
+// Run the runnable on all frames, positions, and channels,
+// -1 --> attach to all planes along given dimension
+acq.attachRunnable(-1,-1,-1,0,runnable); // f, p, c, s 
+print("Runnable successfully attached to MDA.");

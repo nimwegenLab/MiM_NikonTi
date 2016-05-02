@@ -1,3 +1,8 @@
+---
+title: "Setup description of `vng` Nikon Ti"
+author: Thomas Julou
+output: html_document
+---
 
 ## Objectives
 
@@ -26,29 +31,31 @@ Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
 Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150	
 Blue (420-455)	  | CFP             |	438/24            | 275	
 Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
-Teal (500-520)	  | YFP	            | 513/17            | 65	
-*Green* (535-600) | *TRITC*&#42;    | 560/25  	        | 380	
-*Yellow* (535-600)| *mCherry*&#42;  | 575/25	          | 210
-Red (620-750)	    | Cy5             | 650/13	          | 105	
-Far red (620-750)	| Cy5.5           | 657/30	          | 	
-NIR	              | Cy7	            | 740/13	          | 40
+Teal (500-520)	  | YFP	            | 510/10            | 40
+*Green* (535-600) | *TRITC*&#42;    | 554/23  	        | ~250	
+*Yellow* (535-600)| *mCherry*&#42;  | 575/25	          | 210-300
+Far red (620-750)	| Cy5.5           | 667/30	          | <50
 
-Full table and more available from [Lumencor website](http://www.lumencor.com/docs/Power%20&%20Intensity%20Levels%202.28.11.pdf) ([alt link](http://lumencor.com/wp-content/uploads/2012/06/SPECTRA-P-I-06-12.pdf)). \
-&#42; for italicized colours filters are mounted in the corresponding microscope cubes.
+
+<!-- Red (620-750)	    | Cy5             | 650/13	          | 105 -->
+Full table and more available from [Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). \
+&#42; for italicized colours filters are mounted in the corresponding microscope cubes. \
+NB: 667/30 should be replaced by 650/60 or 647/57...
+
 
 
 ## Filter cubes
 
-Pos | Fluorophore                      | Emission filter    | Beam splitter | Emission filter
+Pos | Fluorophore                      | Excitation filter    | Beam splitter | Emission filter
 ----|----------------------------------|--------------------|---------------|----------------
 1   | --                               | --                 | --            | --
 2   | [CFP](http://tiny.cc/ksnu5x)     | --                 | 458 (AHF)     | 480/17 (Semrock BrightLine HC
 *2* | *DAPI*                           | --                 | 416 (AHF)     | 460/50 (Chroma ET)
 3   | [GFP](http://tiny.cc/6dvkzx)     | --                 | 495 (AHF)     | 525/50 (Chroma ET 265146)
 *3* | [*YFP*](http://tiny.cc/8evkzx)   | --                 | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
-4   | [RFP](http://tiny.cc/t9ukzx)     | 560/25 (Semrock)   | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
+4   | [RFP](http://tiny.cc/t9ukzx)     | 554/23 (Semrock)   | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
 5   | [mCherry](http://tiny.cc/egvkzx) | 575/25 (Semrock)   | 594 (Chroma)  | 647/70 (DELTA TopPride)
-6   | [Cy5.5](http://tiny.cc/k6mu5x)   |--                  | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
+6   | [Cy5.5](http://tiny.cc/k6mu5x)   | --                 | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
 
 
 - Positions are written on the flat bottom of the turret.
@@ -115,10 +122,12 @@ SN: 12400
 The integrated temperature controller is [Omron E5CN-H](https://www.ia.omron.com/products/family/1946/).
 
 
+
 # Maintenance
 
-## 20150131 (Thomas)
-SpectraX illumination aligned and characterized.
+## 20150201 (Thomas)
+SpectraX illumination aligned and characterized: aperture (resp. field) shutters adjusted to most homogeneous (resp. smallest without vigneting) pictures.
+(cf clibration report).
 
 ## 20150619 (Thomas)
 20150619: characterization of Flash4 read noise.\
@@ -138,9 +147,9 @@ Defect Correct Mode ON.
 - Configured camera for water cooling.
 
 ## 20151127 (Thomas)
-- Adjust diaphragm of fluo excitation light path.
+- Adjust diaphragms of fluo excitation light path.
 Using the centering tool, aperture diaphragm is set to fill the objective (light contour on the ring).
-Using a uniform fluo slide, the field diaphragm is set tom minimal opening not producing vignetting in the camera field of view.
+Using a uniform fluo slide, the field diaphragm is set to the minimal opening not producing vignetting in the camera field of view.
 Flat field pictures have been saved before and after adjusting the diaphragms.
 
 ## 20151203 (Thomas)
@@ -161,6 +170,29 @@ Flat field pictures have been saved before and after adjusting the diaphragms.
 
 ## 20160119
 - new arduino shutter with a custom shield to control the DIA LED and the SpectraX using TTL (through a demux connected to pins 8-10). Configuration reworked accordingly.
+
+## 20160205
+- installed replacement camera (switch back to air cooling)
+
+## 20160408
+- lab camera is back (installed with air cooling)
+
+
+## 20160429 (Thomas)
+- renamed `DIA` (brightfield) and `DIA Ph3` (phase contrast). remove the condenser ppty form the objective group.
+- restore water cooling in default config (including `Startup` preset).
+- upgraded Hamamatsu DCAM API (and USB driver) to 16.2.4843
+- Adjust diaphragms of fluo excitation light path (using centering tool and adjusted to match 20151127 flat field images).
+NB: Flat field pictures have been saved before and after adjusting the diaphragms.
+- measured SpectraX power at the end of LLG:
+
+LED           	  |                |	          | Doc  | LLG  | Thorlabs LLG
+------------------|----------------|------------|------|------|----
+Blue (420-455)	  | CFP            | 438/24     | 275	 | 192  | 198
+Cyan (460-490)	  | GFP, FITC	     | 475/35     | 215	 | 124  | 135
+Teal (500-520)	  | YFP	           | 510/10     | 40	 | 34   | 35.6
+*Green* (535-600) | TRITC, mCherry | no filter	| >380 | 595  | 645
+Far red (620-750)	| Cy5.5          | 667/30	    | <50  | 9.85 | 10
 
 
 ## To do
