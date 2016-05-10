@@ -1,0 +1,45 @@
+/**
+ * Example script for Micro-Manager 2 demonstrating how datasets can be re-sliced
+ * This particular script creates a new datasets that contains all positions,
+ * channels, slices but only the desired timepoints of the currently shown dataset,
+ * while preserving its metadata.
+ * 
+ * Works only with MM2 but handles datasets created by MM1.4 and outputs datasets 
+ * compatible with it.
+ * 
+ * Chris Weisiger & Thomas Julou: January 2016
+ */
+ 
+int minTime = 0; // 0-based
+int maxTime = 4; // 0-based
+
+// Get the current (topmost) image window.
+oldDisplay = mm.displays().getCurrentWindow();
+// Get its data.
+oldData = oldDisplay.getDatastore();
+// Create a new empty datastore to copy images to.
+newPath = oldData.getSavePath() + "_Frame" + minTime + "-" + maxTime;
+newData = mm.data().createMultipageTIFFDatastore(newPath, false, true);
+
+// Copy summary metadata across. Adjust filename prefix as needed.
+oldSummary = oldData.getSummaryMetadata();
+//newSummary = oldSummary.copy().prefix("MyPrefix").build();
+newData.setSummaryMetadata(newSummary);
+
+// Iterate over all image coordinates in old dataset.
+for (coords : oldData.getUnorderedImageCoords()) {
+  if (coords.getTime() >= minTime && coords.getTime() <= maxTime) {
+    // Copy the image across. Fix its time index as we go.
+    oldImage = oldData.getImage(coords);
+    newImage = oldImage.copyAtCoords(coords.copy().time(coords.getTime() - minTime).build());
+    newData.putImage(newImage);
+  }
+}
+newData.freeze();
+
+// Create a display for the new data.
+newDisplay = mm.displays().createDisplay(newData);
+// Copy display settings across.
+newDisplay.setDisplaySettings(oldDisplay.getDisplaySettings());
+// Save the data, if desired.
+newData.save(org.micromanager.data.Datastore.SaveMode.MULTIPAGE_TIFF, newPath);
