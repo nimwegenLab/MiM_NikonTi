@@ -194,6 +194,19 @@ Teal (500-520)	  | YFP	           | 510/10     | 40	 | 34   | 35.6
 *Green* (535-600) | TRITC, mCherry | no filter	| >380 | 595  | 645
 Far red (620-750)	| Cy5.5          | 667/30	    | <50  | 9.85 | 10
 
+## 20160628 (?? Thomas)
+- one screw maintaining the holder is broken. I unmount the stage and bring it to the workshop to extract it.
+NB: Nikon advised us later to use a screwdriver (pushed in by hitting gently) to unscrew it.
+- all 3 plastic screws (crosshead) are replaced with slot plastic screws (in acrylic?).
+
+## 20160719 (Claudio.Wenger@nikon.com & Gwendoline)
+- Following repeated stage drift problems (sudden shifts in long timelapses + slow relaxing along one axis after reaching the target position) the stage (SN: 661951) is replaced by a temporary stage (SN: 662806).
+- C. Wenger notices that the slot screws currently in use are longer than the original screws (by ca. 0.5mm).
+NB: this fits very well with the observed issues (by scratching the lower plate of the stage, the screws would mess up the displacement in one direction only; large shift accoruing randomly would correspond to a sudden change in the screw position after too much constraints have been accumulated).
+
+## 20160802 (Thomas)
+- Long multiposition timelapse show no stage instability anymore.
+
 
 ## To do
 - measure power for all filter sets (e.g. at 2")
