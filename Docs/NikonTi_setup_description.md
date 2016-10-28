@@ -20,26 +20,34 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 ## Spectra X
 
-Model: SPECTRAX-6_LCR_SA
-SN: 3486
-connected to the computer's serial port (no USB converter). Serial communication (through MM device adapter) is used only to set the intensity; LEDs are switched ON and OFF using TTL signals produced by the Arduino box.
+Model: SPECTRAX-6_LCR_SA  
+SN: 3486  
+connected to the computer's serial port (no USB converter). Serial communication (through MM device adapter) is used only to set the intensity;   LEDs are switched ON and OFF using TTL signals produced by the Arduino box.
 
-By default, excitation filters are placed in the SpectraX.
+Excitation filters are placed in the SpectraX.
 
 Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
 ------------------|-----------------|-------------------|---------------------
 Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150	
 Blue (420-455)	  | CFP             |	438/24            | 275	
-Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
+Cyan (460-490)	  | GFP, FITC	      | 474/23            | 215	
 Teal (500-520)	  | YFP	            | 510/10            | 40
+Yellow (535-600)  | mCherry         | 578/21	          | 210-300
 *Green* (535-600) | *TRITC*&#42;    | 554/23  	        | ~250	
-*Yellow* (535-600)| *mCherry*&#42;  | 575/25	          | 210-300
 Far red (620-750)	| Cy5.5           | 667/30	          | <50
 
 
-<!-- Red (620-750)	    | Cy5             | 650/13	          | 105 -->
+Other filters available (compatible with single-band cubes):
+
+Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
+------------------|-----------------|-------------------|---------------------
+Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
+Yellow (535-600)  | mCherry         | 575/25	          | 210-300
+Red (620-750)	    | Cy5             | 650/13	          | 105
+
+
 Full table and more available from [Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). \
-&#42; for italicized colours filters are mounted in the corresponding microscope cubes. \
+&#42; for italicized colours, filters are must be exchanged in the SpectraX. \
 NB: 667/30 should be replaced by 650/60 or 647/57...
 
 
@@ -49,13 +57,24 @@ NB: 667/30 should be replaced by 650/60 or 647/57...
 Pos | Fluorophore                      | Excitation filter    | Beam splitter | Emission filter
 ----|----------------------------------|--------------------|---------------|----------------
 1   | --                               | --                 | --            | --
-2   | [CFP](http://tiny.cc/ksnu5x)     | --                 | 458 (AHF)     | 480/17 (Semrock BrightLine HC
-*2* | *DAPI*                           | --                 | 416 (AHF)     | 460/50 (Chroma ET)
-3   | [GFP](http://tiny.cc/6dvkzx)     | --                 | 495 (AHF)     | 525/50 (Chroma ET 265146)
-*3* | [*YFP*](http://tiny.cc/8evkzx)   | --                 | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
-4   | [RFP](http://tiny.cc/t9ukzx)     | 554/23 (Semrock)   | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
-5   | [mCherry](http://tiny.cc/egvkzx) | 575/25 (Semrock)   | 594 (Chroma)  | 647/70 (DELTA TopPride)
-6   | [Cy5.5](http://tiny.cc/k6mu5x)   | --                 | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
+*1* | *DAPI*&#42;&#42;                 | --                 | 416 (AHF)     | 460/50 (Chroma ET)
+2   | [*GFP*](http://tiny.cc/6dvkzx)   | --                 | 495 (AHF)     | 525/50 (Chroma ET 265146)
+3   | [RFP](http://tiny.cc/t9ukzx)     | &#42;&#42;         | 573 (Chroma)  | 609/54 (Semrock BrightLine HC)
+4   | [Cy5.5](http://tiny.cc/k6mu5x)   | --                 | 700 (Semrock) | 775/140 (Semrock BrightLine HC)
+5   | [**GFP**/**mCherry**]()   | --                 | 495/605 (Semrock)  | 527/ - 645/ (Semrock BrightLine HC)
+6   | [CFP/YFP/*mCherry*]()     | --                 | 459/526/596 (Semrock)  | 475/-543/-702/ (Semrock BrightLine HC)
+
+Whenever possible, the bold filters should be preferred over the italicized ones.  
+&#42;&#42; these filters or cubes must be exchanged (NB: RFP cannot be used in combination with mCherry).
+
+
+Other single-band cubes are available:
+
+Pos | Fluorophore                      | Excitation filter    | Beam splitter | Emission filter
+----|----------------------------------|--------------------|---------------|----------------
+    | [CFP](http://tiny.cc/ksnu5x)     | --                 | 458 (AHF)     | 480/17 (Semrock BrightLine HC
+    | [*YFP*](http://tiny.cc/8evkzx)   | --                 | 520 (AHF)     | 542/27 (Semrock BrightLine HC)
+    | [mCherry](http://tiny.cc/egvkzx) | 575/25 (Semrock)   | 594 (Chroma)  | 647/70 (DELTA TopPride)
 
 
 - Positions are written on the flat bottom of the turret.
@@ -206,6 +225,15 @@ NB: this fits very well with the observed issues (by scratching the lower plate 
 
 ## 20160802 (Thomas)
 - Long multiposition timelapse show no stage instability anymore.
+
+## 20160805 (INCIDENT)
+- At the end of the experiment, the cooler is at 47.4 degC!!!
+It sounds like the water circulation is lower than previously (noticed a few days earlier by Guillaume but the cooling was still working...)
+
+## 20161028 (Thomas)
+- the order of the objectives is changed to facilitate plates imaging.
+- several single band filters replaced by the new dual and tri cubes.
+
 
 
 ## To do

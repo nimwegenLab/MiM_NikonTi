@@ -1,13 +1,15 @@
 // modified from manualAcq.bsh
-// all settings (time points, positions, save) but channels must be set in the MDA window
-// must have 2 "dummy" channels defined in MDA
+// all settings (time points, positions, save; including other non-default channels) must be set in the MDA window
+// must have enough channels defined in MDA (so that the custom channel index exists)
 // must be run (every time!) before starting MDA
 
 // must be TPC
-String transChannel = " DIA (GFP)";
-int transExposure = 100;
-String[] fluoChannels = {"GFP","GFP","GFP","GFP","GFP","GFP","GFP"," DIA (GFP)"};
-int[] fluoExposures = {2000,2000,2000,2000,2000,2000,2000,10};
+int customChannelIndex = 1; // index in the MDA list (zero-based)
+String[] customChannelValues = {"YFP (Tri)","YFP (Tri)","YFP (Tri)","YFP (Tri)","YFP (Tri)",
+"YFP (Tri)","YFP (Tri)","YFP (Tri)","YFP (Tri)"," DIA Ph3 (Tri)"};
+int[] customChannelExposures = {2000,2000,2000,2000,2000,
+2000,2000,2000,2000,10};
+
 
 // DO NOT EDIT BELOW
 import org.micromanager.api.PositionList;
@@ -21,19 +23,12 @@ runnable = new Runnable() {
    public void run() {
 		PositionList pl = gui.getPositionList();
 		channels = acq.getChannels();
-		channel = channels.get(ch_count);
+		//channel = channels.get(ch_count);
 
-      if (ch_count == 0) {
-			//	set TRANS channel
-	      mmc.setExposure(transExposure);
-	      mmc.setConfig(channelGroup, transChannel);
-	      mmc.waitForConfig(channelGroup, transChannel);
-      }
-      if (ch_count == 1) { // custom fluo channel
-			//	set FLUO channel
-	      mmc.setExposure(fluoExposures[pos_count]);
-	      mmc.setConfig(channelGroup, fluoChannels[pos_count]);
-	      mmc.waitForConfig(channelGroup, fluoChannels[pos_count]);
+      if (ch_count == customChannelIndex) { // custom channel
+	      mmc.setExposure(customChannelExposures[pos_count]);
+	      mmc.setConfig(channelGroup, customChannelValues[pos_count]);
+	      mmc.waitForConfig(channelGroup, customChannelValues[pos_count]);
       }
       
  //     print("Image " + i);
