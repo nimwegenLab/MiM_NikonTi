@@ -24,32 +24,31 @@ Model: SPECTRAX-6_LCR_SA
 SN: 3486  
 connected to the computer's serial port (no USB converter). Serial communication (through MM device adapter) is used only to set the intensity;   LEDs are switched ON and OFF using TTL signals produced by the Arduino box.
 
-Excitation filters are placed in the SpectraX.
+Excitation filters are placed in the SpectraX.  
+Power is measured in mW at the end of a 3mm LLG.
 
-Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
-------------------|-----------------|-------------------|---------------------
-Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 150	
-Blue (420-455)	  | CFP             |	438/24            | 275	
-Cyan (460-490)	  | GFP, FITC	      | 474/23            | 215	
-Teal (500-520)	  | YFP	            | 510/10            | 40
-Yellow (535-600)  | mCherry         | 578/21	          | 210-300
-*Green* (535-600) | *TRITC*&#42;    | 554/23  	        | ~250	
-Far red (620-750)	| Cy5.5           | 667/30	          | <50
-
+Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (5%) | Power (97%) | Power (spec)
+------------------|-----------------|-------------------|------------|-------------|-------------
+Violet (380-410)	| DAPI, Hoechst	  | 386/23            | 6.6        | 108         | 150	   
+Blue (420-455)	  | CFP             |	438/24            | 13.2       | 164         | 275	   	
+Cyan (460-490)	  | GFP, FITC	      | 474/23            | 4.4        | 111         | 215		 
+Teal (500-520)	  | YFP	            | 510/10            | 1.5        | 31.5        | 40	   
+Yellow (535-600)  | mCherry         | 578/21	          | 5.9        | 144         | 210-300
+*Green* (535-600) | *TRITC*&#42;    | 554/23  	        | 9.4        | 218         | ~250	
+Far red (620-750)	| Cy5.5           | 667/30	          | 0          | 7.6         | <50
 
 Other filters available (compatible with single-band cubes):
 
-Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (uW; 3 mm LLG)
-------------------|-----------------|-------------------|---------------------
-Cyan (460-490)	  | GFP, FITC	      | 475/35            | 215	
-Yellow (535-600)  | mCherry         | 575/25	          | 210-300
-Red (620-750)	    | Cy5             | 650/13	          | 105
+Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (5%) | Power (97%) | Power (spec)
+------------------|-----------------|-------------------|------------|-------------|-------------
+Cyan (460-490)	  | GFP, FITC	      | 475/35            | 6.1        | 124         | 215	
+Yellow (535-600)  | mCherry         | 575/25	          |            |             | 210-300
+Red (620-750)	    | Cy5             | 650/13	          |            |             | 105
 
 
-Full table and more available from [Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). \
+Full table and more available from[Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). \
 &#42; for italicized colours, filters are must be exchanged in the SpectraX. \
 NB: 667/30 should be replaced by 650/60 or 647/57...
-
 
 
 ## Filter cubes
@@ -232,8 +231,15 @@ It sounds like the water circulation is lower than previously (noticed a few day
 
 ## 20161028 (Thomas)
 - the order of the objectives is changed to facilitate plates imaging.
-- several single band filters replaced by the new dual and tri cubes.
+- several single band filters replaced by the new dual and tri cubes:
+  + 2 new cubes (Dual: GFP/mCheery; Tri: CFP/YFP/mCherry)
+  + excitation filters changed: GFP (475/35 => 474/23) and mCherry (575/25 => 578/21)
+- BREAKING CHANGES:
+  + the GFP excitation filter has changed; in order to obtain results comparable which previous experiments, you should change the GFP filter in the SpectraX.
+  + mCherry and RFP excitation filters are now back in the SpectraX rather than in the cubes
 
+## 20161122 (Thomas)
+- measured all intensities using the Xcite powermeter (from IMCF), at the output of the LLG (NB: low battery of the powermeter).
 
 
 ## To do
