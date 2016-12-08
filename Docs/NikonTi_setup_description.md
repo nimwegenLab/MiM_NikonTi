@@ -140,6 +140,16 @@ SN: 12400
 The integrated temperature controller is [Omron E5CN-H](https://www.ia.omron.com/products/family/1946/).
 
 
+# Flow control
+
+ID | SN           | Use | Comments
+---|--------------|-----|---------
+1  | FLOW-02-4854 | Ch1 | was clogged by GW in 09.2016, cleaned up and in use again since 12.2016
+2  | FLOW-02-4852 | Ch2 | 
+3  | FLOW-02-4853 |     | used temporarily for Ch1 (10-11.2016)
+4  | FLOW-02-4855 |     | 
+
+
 
 # Maintenance
 
@@ -242,5 +252,5 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - measured all intensities using the Xcite powermeter (from IMCF), at the output of the LLG (NB: low battery of the powermeter).
 
 
-## To do
-- measure power for all filter sets (e.g. at 2")
+## 20161202 (Thomas)
+- checked the aperture diaphragm of the epifluo arm (was correct).
