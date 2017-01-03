@@ -1,0 +1,70 @@
+// from https://github.com/hadim/mm_scripts/blob/master/scripts/Separate_XY_Positions.bsh
+// Hadrien Mary 2016
+import java.io.File;
+import java.util.ArrayList;
+import org.micromanager.data.internal.DefaultCoords.Builder;
+
+// Get the current Datastore
+datastore = mm.displays().getCurrentWindow().getDatastore();
+
+// Get the number of XY Positions in the datastore
+n_position = datastore.getMaxIndices().getStagePosition() + 1;
+
+// Create a Datastore for each XY Position
+datastores = new ArrayList();
+
+for(int position=0; position < n_position; position++){
+
+	// Get the name and path of the new datastore
+	prefix = new File(datastore.getSavePath()).getName() + "_XYPosition_" + position;
+	data_path = new File(datastore.getSavePath(), prefix).toString();
+
+	// Create the new datastore
+	datastore_pos = mm.data().createMultipageTIFFDatastore(data_path, true, false);
+
+	print("Processing " + data_path);
+
+	// Generate new metadata for the datastore
+	metadata = datastore.getSummaryMetadata();
+	intended_dimensions = metadata.getIntendedDimensions().copy().stagePosition(1).build();
+	new_metadata = metadata.copy().intendedDimensions(intended_dimensions).build();
+	new_metadata = new_metadata.copy().prefix(prefix).build();
+	
+	datastore_pos.setSummaryMetadata(new_metadata);
+
+	datastores.add(datastore_pos);
+}
+
+// Iterate over all the images and add them to the new datastores according to the XY position
+
+axes = datastore.getSummaryMetadata().getAxisOrder();
+for(int i=0; i < datastore.getMaxIndices().getIndex(axes[0]) + 1; i++){
+	for(int j=0; j < datastore.getMaxIndices().getIndex(axes[1]) + 1; j++){
+		for(int k=0; k < datastore.getMaxIndices().getIndex(axes[2]) + 1; k++){
+			for(int l=0; l < datastore.getMaxIndices().getIndex(axes[3]) + 1; l++){
+				
+				coords = (new Builder()).build();
+				coords = coords.copy().index(axes[0], i).build();
+				coords = coords.copy().index(axes[1], j).build();
+				coords = coords.copy().index(axes[2], k).build();
+				coords = coords.copy().index(axes[3], l).build();
+
+				datastore_pos = datastores.get(coords.getStagePosition());
+				image = datastore.getImage(coords);
+
+				new_coords = coords.copy().stagePosition(0).build();
+				datastore_pos.putImage(image.copyAtCoords(new_coords));
+					
+			}
+		}
+	}
+}
+
+// Freeze and close the datastore
+for(datastore_pos: datastores){
+	datastore_pos.freeze();
+	datastore_pos.close();
+}
+
+print("Done");
+
