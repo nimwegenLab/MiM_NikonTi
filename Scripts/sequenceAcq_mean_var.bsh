@@ -1,0 +1,146 @@
+// sequenceAcq_mean_var.bsh acquires a given number of frames 
+// and computes the mean and variance of each pixel (without 
+// displaying the individual frames) using Welford's algorithm
+// https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
+// it also records the average intensity of each frame in a text file
+// © Thomas Julou, February 2017 (thomas.julou@normalesup.org)
+
+nbFrames = 1; // MUST BE >1
+path_mean = "/Users/julou/Downloads/mean.tif";
+path_var = "/Users/julou/Downloads/var.tif";
+path_timeSeries = "/Users/julou/Downloads/timeSeries.txt";
+
+
+import ij.IJ;
+import ij.ImagePlus;
+import ij.io.FileSaver;
+import ij.process.*;
+import ij.measure.ResultsTable;
+import java.lang.System;
+
+int Mod(int a, int b) {
+     if (b == 0)
+       return a;
+     if (a * b >= 0)
+       return a - b * (a / b);
+     else
+       return a - b * (a / b - 1);
+   }
+
+// INITIALISATION
+if (nbFrames < 2) {
+	error("the variance can't be computed (nbFrames must be greater than 1).\n");
+	return;
+}
+
+width = mmc.getImageWidth();
+height = mmc.getImageHeight();
+byteDepth = mmc.getBytesPerPixel();
+if (byteDepth == 1) {
+   ip = new ByteProcessor((int)width, (int)height);
+   ip.setPixels(img);
+} else if (byteDepth==2) {
+   ip = new ShortProcessor((int)width, (int)height);
+   ip.setPixels(img);
+} else {
+   console.message("Unknown byte depth.");
+   return;
+}
+ip_mean = new FloatProcessor((int)width, (int)height);
+ip_delta = new FloatProcessor((int)width, (int)height);
+ip_delta_n = new FloatProcessor((int)width, (int)height);
+ip_delta2 = new FloatProcessor((int)width, (int)height);
+ip_delta_prod = new FloatProcessor((int)width, (int)height);
+ip_m2 = new FloatProcessor((int)width, (int)height);
+ip_var = new FloatProcessor((int)width, (int)height);
+
+ImagePlus imp_mean = new ImagePlus("mean", ip_mean);
+imp_mean.show();
+FileSaver fsm = new FileSaver(imp_mean);
+fsm.saveAsTiff("/Users/julou/Downloads/mean.tif");
+
+ImagePlus imp_var = new ImagePlus("variance", ip_var);
+imp_var.show();
+FileSaver fsv = new FileSaver(imp_var);
+fsv.saveAsTiff("/Users/julou/Downloads/var.tif");
+
+ResultsTable rt = new ResultsTable();
+rt.reset();
+
+mmc.sleep(100);
+
+
+// IMAGE ACQUISITION
+mmc.startSequenceAcquisition(nbFrames, 0, true);
+frame = 0;
+exposureMs = mmc.getExposure();
+tStart = System.currentTimeMillis();
+while (mmc.getRemainingImageCount() > 0 || mmc.isSequenceRunning(mmc.getCameraDevice())) {
+   if (mmc.getRemainingImageCount() > 0) {
+   	// retrieve next image
+      frame++;
+      img = mmc.popNextImage();
+      ip.setPixels(img);
+		//ipf.copyBits(ip.convertToFloatProcessor(), 0, 0, Blitter.COPY);
+
+		stats = ip.getStatistics();
+		rt.incrementCounter();
+		rt.addValue("time", System.currentTimeMillis() -  tStart);
+		rt.addValue("mean", stats.mean);
+
+		// Update Pixels Stats
+		// delta = x - mean
+		ip_delta.copyBits(ip.convertToFloatProcessor(), 0, 0, Blitter.COPY);
+		ip_delta.copyBits(ip_mean, 0, 0, Blitter.SUBTRACT);
+		// mean += delta/n
+		ip_delta_n.copyBits(ip_delta, 0, 0, Blitter.COPY);
+		ip_delta_n.multiply((Float) 1/frame);
+		ip_mean.copyBits(ip_delta_n, 0, 0, Blitter.ADD);
+		// delta2 = x - mean
+		ip_delta2.copyBits(ip.convertToFloatProcessor(), 0, 0, Blitter.COPY);
+		ip_delta2.copyBits(ip_mean, 0, 0, Blitter.SUBTRACT);
+		// M2 += delta*delta2
+		ip_delta_prod.copyBits(ip_delta, 0, 0, Blitter.COPY);
+		ip_delta_prod.copyBits(ip_delta2, 0, 0, Blitter.MULTIPLY);
+		ip_m2.copyBits(ip_delta_prod, 0, 0, Blitter.ADD);
+
+		if (Mod(frame, 100) == 0 ) print(frame);
+
+		if (Mod(frame, 100) == 10 ) {
+			imp_mean.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
+			fsm.saveAsTiff(path_mean);
+			imp_var.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
+			fsv.saveAsTiff(path_var);
+			print("saved...");
+		}
+
+		if (Mod(frame, 100) == 20 ) rt.saveAs(path_timeSeries);
+
+   }
+   else {
+      mmc.sleep(Math.min(0.5 * exposureMs, 20));
+//      print("wait");
+   }
+}
+
+mmc.stopSequenceAcquisition();
+
+
+// HOUSEKEEPING
+imp_mean.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
+fsm.saveAsTiff(path_mean);
+imp_mean.updateAndDraw();
+//IJ.resetMinAndMax();
+
+ip_var.copyBits(ip_m2, 0, 0, Blitter.COPY);
+ip_var.multiply((Float) 1/(frame-1));
+imp_var.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
+fsv.saveAsTiff(path_var);
+imp_var.updateAndDraw();
+//IJ.resetMinAndMax();
+
+rt.show("Time series");
+rt.saveAs(path_timeSeries);
+
+print("Acquisition done!");
+print(imp_mean.getProperty("Info"));
