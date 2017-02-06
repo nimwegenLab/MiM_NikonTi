@@ -5,10 +5,10 @@
 // it also records the average intensity of each frame in a text file
 // © Thomas Julou, February 2017 (thomas.julou@normalesup.org)
 
-nbFrames = 1; // MUST BE >1
-path_mean = "/Users/julou/Downloads/mean.tif";
-path_var = "/Users/julou/Downloads/var.tif";
-path_timeSeries = "/Users/julou/Downloads/timeSeries.txt";
+nbFrames = 60000; // MUST BE >1
+path_mean = "D:/mean.tif";
+path_var = "D:/var.tif";
+path_timeSeries = "D:/timeSeries.txt";
 
 
 import ij.IJ;
@@ -38,10 +38,8 @@ height = mmc.getImageHeight();
 byteDepth = mmc.getBytesPerPixel();
 if (byteDepth == 1) {
    ip = new ByteProcessor((int)width, (int)height);
-   ip.setPixels(img);
 } else if (byteDepth==2) {
    ip = new ShortProcessor((int)width, (int)height);
-   ip.setPixels(img);
 } else {
    console.message("Unknown byte depth.");
    return;
@@ -57,12 +55,12 @@ ip_var = new FloatProcessor((int)width, (int)height);
 ImagePlus imp_mean = new ImagePlus("mean", ip_mean);
 imp_mean.show();
 FileSaver fsm = new FileSaver(imp_mean);
-fsm.saveAsTiff("/Users/julou/Downloads/mean.tif");
+fsm.saveAsTiff(path_mean);
 
 ImagePlus imp_var = new ImagePlus("variance", ip_var);
 imp_var.show();
 FileSaver fsv = new FileSaver(imp_var);
-fsv.saveAsTiff("/Users/julou/Downloads/var.tif");
+fsv.saveAsTiff(path_var);
 
 ResultsTable rt = new ResultsTable();
 rt.reset();
