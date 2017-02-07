@@ -2,13 +2,14 @@
 // and computes the mean and variance of each pixel (without 
 // displaying the individual frames) using Welford's algorithm
 // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
-// it also records the average intensity of each frame in a text file
-// Â© Thomas Julou, February 2017 (thomas.julou@normalesup.org)
+// also records the average intensity of each frame in a text file
+// © Thomas Julou, February 2017 (thomas.julou@normalesup.org)
 
-nbFrames = 60000; // MUST BE >1
-path_mean = "D:/mean.tif";
-path_var = "D:/var.tif";
-path_timeSeries = "D:/timeSeries.txt";
+nbFrames = 10000; // MUST BE >1
+saveBaseName = "20170206_qsi100";
+saveDir = "D:/";
+waitSecBeforeStart = 20; // 0.1; // in sec
+
 
 
 import ij.IJ;
@@ -32,6 +33,13 @@ if (nbFrames < 2) {
 	error("the variance can't be computed (nbFrames must be greater than 1).\n");
 	return;
 }
+
+if (waitSecBeforeStart > 1) print("Acquisition will start in " + waitSecBeforeStart + " sec.");
+
+fileSep = System.getProperty("file.separator");
+path_mean = saveDir + fileSep + saveBaseName + "_mean.tif";
+path_var = saveDir + fileSep + saveBaseName + "_var.tif";
+path_timeSeries = saveDir + fileSep + saveBaseName + "_timeSeries.txt";
 
 width = mmc.getImageWidth();
 height = mmc.getImageHeight();
@@ -65,7 +73,7 @@ fsv.saveAsTiff(path_var);
 ResultsTable rt = new ResultsTable();
 rt.reset();
 
-mmc.sleep(100);
+mmc.sleep(waitSecBeforeStart * 1000);
 
 
 // IMAGE ACQUISITION
@@ -107,6 +115,8 @@ while (mmc.getRemainingImageCount() > 0 || mmc.isSequenceRunning(mmc.getCameraDe
 		if (Mod(frame, 100) == 10 ) {
 			imp_mean.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
 			fsm.saveAsTiff(path_mean);
+			ip_var.copyBits(ip_m2, 0, 0, Blitter.COPY);
+			ip_var.multiply((Float) 1/(frame-1));
 			imp_var.setProperty("Info", frame + " frames (" + exposureMs + "ms)");
 			fsv.saveAsTiff(path_var);
 			print("saved...");
