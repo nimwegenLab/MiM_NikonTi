@@ -1,0 +1,123 @@
+// This MM2 script runs the MDA defined in the GUI and creates a companion dataset 
+// in which one image is acquired for each time point at the position / configuration 
+// active when the script is run.
+// NB: you might want to uncheck "Sync exposure between main and MDA window" in MM's options.
+// Thomas Julou, February 2017
+
+suffix = "_DAW"; // suffix appened to the MDA name
+zStage = "Z";    // stage used for autofocusing (it might be different from Core-Focus)
+
+
+// DO NOT EDIT BELOW
+import org.micromanager.data.Image;
+import org.micromanager.display.DisplayWindow;
+import org.micromanager.MultiStagePosition;
+import mmcorej.DeviceType;
+import mmcorej.TaggedImage;
+
+mm.acquisitions().clearRunnables();
+settings = mm.acquisitions().getAcquisitionSettings();
+ if (settings.timeFirst) { // bug??  xxx
+ 	mm.logs().showError("Time must appear first in Acquisition Order.");
+ 	return(1);
+ } 
+
+// retrieve current position
+xyStage = mmc.getXYStageDevice();
+xPos = mmc.getXPosition(xyStage);
+yPos = mmc.getYPosition(xyStage);
+//stageDevices = mmc.getLoadedDevicesOfType(DeviceType.StageDevice);
+//stageDevice = zDevices.get(0)
+//mmc.isContinuousFocusDrive(stageDevice);
+pos = new MultiStagePosition(xyStage, xPos, yPos, zStage, mmc.getPosition(zStage));
+
+// retrieve current channel and exposure
+channelGroup = mmc.getChannelGroup();
+channel = mmc.getCurrentConfig(channelGroup);
+if(channel == null || channel.isEmpty()) {
+ 	mm.logs().showError("The channel configuration must be set in the main window.");
+ 	return(1);		
+}
+exposure = mmc.getExposure();
+
+// handle a bug at MM start (the first datastore can't be created within a if...)
+store = mm.data().createRAMDatastore();
+store.close();
+
+if (settings.save) {
+ 	fileSep = System.getProperty("file.separator");
+ 	storePath = settings.root + fileSep + settings.prefix + suffix;
+	store = mm.data().createMultipageTIFFDatastore(storePath, false, false);
+ } else {
+   store = mm.data().createRAMDatastore();
+ }
+DisplayWindow display = mm.displays().createDisplay(store);
+mm.displays().manage(store);
+
+// set file name, channel and exposure in metadata
+smdb = mm.data().getSummaryMetadataBuilder();
+//	smdb = store.getSummaryMetadata().copy();
+smdb.directory(settings.root);
+smdb.prefix(settings.prefix + "_DAW");
+smdb.channelGroup(settings.channelGroup);
+smdb.channelNames(new String[]{channel});
+//	smdb.startDate();
+smdb.waitInterval(settings.intervalMs);
+store.setSummaryMetadata(smdb.build());
+
+runnable = new Runnable() {
+	numFrames = settings.numFrames;
+   int frame = 0;
+   start = 0.0;
+   public void run() {
+   	if (frame == 0) {
+   		start = System.currentTimeMillis();
+   	}
+		// store current state
+		channelBefore = mmc.getCurrentConfig(channelGroup);
+		exposureBefore = mmc.getExposure();
+//		posBefore = new MultiStagePosition(xyStage, xPos, yPos, zStage, mmc.getPosition(zStage));
+   	
+		// go to position, autofocus, and update z coordinate
+		MultiStagePosition.goToPosition(pos, mm.getCore());
+		mmc.fullFocus();
+		pos = new MultiStagePosition(xyStage, xPos, yPos, zStage, mmc.getPosition(zStage));
+
+ 		// set desired state
+ 		mmc.setConfig(channelGroup, channel);
+ 		mmc.waitForConfig(channelGroup, channel);
+		mmc.setExposure(exposure);
+		
+ 		// acquire image
+		mm.getCore().snapImage();
+		TaggedImage tmp = mm.getCore().getTaggedImage();
+		Image img = mm.data().convertTaggedImage(tmp);
+		// update metadata
+		mdb = img.getMetadata().copy();
+		mdb.elapsedTimeMs(System.currentTimeMillis() - start);
+		mdb.exposureMs(exposure);
+//		mdb.receivedTime();
+		// store image with metadata
+//		img = img.copyAtCoords(img.getCoords().copy().time(frame).build());
+		img = img.copyWith(img.getCoords().copy().time(frame).build(), mdb.build());
+		store.putImage(img);
+
+		// restore initial state
+ 		mmc.setConfig(channelGroup, channelBefore);
+ 		mmc.waitForConfig(channelGroup, channelBefore);
+		mmc.setExposure(exposureBefore);
+		
+      ++frame;
+      if (frame >= numFrames) {
+         store.freeze();
+      }
+   }
+};
+
+// Run the runnable on all frames (at first position, channel, slice)
+// Numbers are frames, stage positions, channels, slices (-1 attach to all planes along given dimension)
+mm.acquisitions().attachRunnable(-1, 0, 0, 0, runnable);
+//mm.scripter().message("Runnable successfully attached to MDA...");
+
+// Start MDA
+mm.acquisitions().runAcquisition();
