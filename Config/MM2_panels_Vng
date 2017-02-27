@@ -52,7 +52,7 @@
       "rectHeight": 1,
       "config": {
         "scriptPath": {
-          "PropVal": "C:\\NikonTiSetup\\Scripts\\delayed_MDA.bsh",
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\delayedMDA.bsh",
           "PropType": "String"
         },
         "__MM_CustomIcon": {
@@ -146,8 +146,8 @@
     }
   ],
   "title": "VNG Default",
-  "yPos": 496,
-  "xPos": 0,
+  "yPos": 687,
+  "xPos": -1,
   "dividers": [{
     "y1": 4,
     "y2": 4,
