@@ -76,7 +76,8 @@ runnable = new Runnable() {
 		// store current state
 		channelBefore = mmc.getCurrentConfig(channelGroup);
 		exposureBefore = mmc.getExposure();
-//		posBefore = new MultiStagePosition(xyStage, xPos, yPos, zStage, mmc.getPosition(zStage));
+		posBefore = new MultiStagePosition(xyStage, mmc.getXPosition(xyStage), 
+			mmc.getYPosition(xyStage), zStage, mmc.getPosition(zStage));
    	
 		// go to position, autofocus, and update z coordinate
 		MultiStagePosition.goToPosition(pos, mm.getCore());
@@ -106,6 +107,7 @@ runnable = new Runnable() {
  		mmc.setConfig(channelGroup, channelBefore);
  		mmc.waitForConfig(channelGroup, channelBefore);
 		mmc.setExposure(exposureBefore);
+		MultiStagePosition.goToPosition(posBefore, mm.getCore());
 		
       ++frame;
       if (frame >= numFrames) {
