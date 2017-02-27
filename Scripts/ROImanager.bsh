@@ -1,0 +1,3 @@
+// opens IJ's ROI Manager window
+import ij.IJ;
+IJ.run("ROI Manager...", "");

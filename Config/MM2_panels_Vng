@@ -1,0 +1,163 @@
+{"panels": [{
+  "cells": [
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.AutofocusButtons",
+      "rectHeight": 1,
+      "config": {},
+      "rectX": 0,
+      "rectY": 0
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.ScriptButton",
+      "rectHeight": 1,
+      "config": {
+        "scriptPath": {
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\ROImanager.bsh",
+          "PropType": "String"
+        },
+        "__MM_CustomIcon": {
+          "PropVal": "{\"path to icon file\":\"windowed\",\"custom icon type\":\"icon loaded from our jar\"}",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 7
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.PresetButton",
+      "rectHeight": 1,
+      "config": {
+        "backgroundColor": {
+          "PropVal": -1,
+          "PropType": "Integer"
+        },
+        "configGroup": {
+          "PropVal": "  Channel",
+          "PropType": "String"
+        },
+        "presetName": {
+          "PropVal": " DIA Ph3 (Dual)",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 4
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.ScriptButton",
+      "rectHeight": 1,
+      "config": {
+        "scriptPath": {
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\delayed_MDA.bsh",
+          "PropType": "String"
+        },
+        "__MM_CustomIcon": {
+          "PropVal": "{\"path to icon file\":\"film\",\"custom icon type\":\"icon loaded from our jar\"}",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 9
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.ScriptButton",
+      "rectHeight": 1,
+      "config": {
+        "scriptPath": {
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\MDAextraPos.bsh",
+          "PropType": "String"
+        },
+        "__MM_CustomIcon": {
+          "PropVal": "{\"path to icon file\":\"film_file\",\"custom icon type\":\"icon loaded from our jar\"}",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 10
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.ScriptButton",
+      "rectHeight": 1,
+      "config": {
+        "scriptPath": {
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\clearRunnable.bsh",
+          "PropType": "String"
+        },
+        "__MM_CustomIcon": {
+          "PropVal": "{\"path to icon file\":\"film_delete\",\"custom icon type\":\"icon loaded from our jar\"}",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 8
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.PresetButton",
+      "rectHeight": 1,
+      "config": {
+        "backgroundColor": {
+          "PropVal": -10027264,
+          "PropType": "Integer"
+        },
+        "configGroup": {
+          "PropVal": "  Channel",
+          "PropType": "String"
+        },
+        "presetName": {
+          "PropVal": "GFP (Dual)",
+          "PropType": "String"
+        }
+      },
+      "rectX": 0,
+      "rectY": 5
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.CloseAllButton",
+      "rectHeight": 1,
+      "rectX": 0,
+      "rectY": 12
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.LiveButton",
+      "rectHeight": 1,
+      "config": {"isBig": {
+        "PropVal": true,
+        "PropType": "Boolean"
+      }},
+      "rectX": 0,
+      "rectY": 1
+    },
+    {
+      "rectWidth": 1,
+      "pluginName": "org.micromanager.quickaccess.internal.controls.ExposureTime",
+      "rectHeight": 1,
+      "config": {},
+      "rectX": 0,
+      "rectY": 3
+    }
+  ],
+  "title": "VNG Default",
+  "yPos": 496,
+  "xPos": 0,
+  "dividers": [{
+    "y1": 4,
+    "y2": 4,
+    "x2": 1,
+    "x1": 0
+  }],
+  "windowHeight": 715,
+  "windowWidth": 136,
+  "openMode": "Always",
+  "numRows": 13,
+  "wasOpen": true,
+  "numCols": 1
+}]}

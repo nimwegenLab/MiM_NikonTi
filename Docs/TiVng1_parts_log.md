@@ -204,3 +204,11 @@ It sounds like the water circulation is lower than previously (noticed a few day
 
 ## 20161202 (Thomas)
 - checked the aperture diaphragm of the epifluo arm (was correct).
+
+## 20170207 (Thomas)
+- fixed windows resizing problem on new Dell U3417W (following http://superuser.com/a/508782)
+- acquired PTC files and PSF
+
+## 20170227 (Thomas)
+- installed MM2
+
