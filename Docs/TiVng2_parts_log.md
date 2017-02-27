@@ -18,20 +18,20 @@ Magnification | NA    | WD (mm) | Phase contrast | Model
 
 ## Spectra X
 
-Model: SPECTRAX-6_LCR_SA  
-SN: xxx  
+Model: SPECTRAX-6_LCR_SG  
+SN: 11854  
 
 Power is measured in mW at the end of a 3mm LLG.
 
 Color band (nm)   | Fluorophore	    | Excitation Filter	| Power (5%) | Power (97%) | Power (spec)
 ------------------|-----------------|-------------------|------------|-------------|-------------
-Violet (380-410)	| DAPI, Hoechst	  | 390/22            | 6.6        | 108         | 150	   
-Blue (420-455)	  | CFP             |	440/20            | 13.2       | 164         | 275	   	
-Cyan (460-490)	  | GFP, FITC	      | 470/24            | 4.4        | 111         | 215		 
-Teal (500-520)	  | YFP	            | 511/16            | 1.5        | 31.5        | 40	   
-Yellow (535-600)  | mCherry         | 578/21	          | 5.9        | 144         | 210-300
-*Green* (535-600) | *TRITC*&#42;    | 555/28  	        | 9.4        | 218         | ~250	
-Far red (620-750)	| Cy5.5           | 640/30	          | 0          | 7.6         | <50
+Violet (380-410)	| DAPI, Hoechst	  | 390/22            | 8.7        | 186         | 150	   
+Blue (420-455)	  | CFP             |	440/20            | 19.2       | 246         | 275	   	
+Cyan (460-490)	  | GFP, FITC	      | 470/24            | 9.9        | 132         | 215		 
+Teal (500-520)	  | YFP	            | 511/16            | 2.1        | 33.5        | 40	   
+Yellow (535-600)  | mCherry         | 578/21	          | 9.0        | 270         | 210-300
+*Green* (535-600) | *TRITC*&#42;    | 555/28  	        | 11.1       | 321         | ~250	
+Far red (620-750)	| Cy5.5           | 640/30	          | 8.5        | 182         | <50
 
 &#42; for italicized colours, filters are must be exchanged in the SpectraX. \
 
@@ -60,7 +60,7 @@ Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 Dell Precision Tower 7910 (pz-rgen02-pdw01)
 System drive (C): SSD (256gb)
 Data drive (D): RAID10 volume (2tb; hardware RAID powered by `MegaRAID SAS 9361-8i` PCIe controller and 4 SAS HD)
-USB3 connection for Flash4 camera: only on PCIe USB3 ports (card U3-PCIE1XG202)
+USB3 connection for Flash4 camera: only on PCIe USB3 ports (card U3-PCIE1XG205-1S)
 
 
 # Temperature regulation

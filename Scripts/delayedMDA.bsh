@@ -1,0 +1,22 @@
+// adapted for MM2 from http://micro-manager.3463995.n2.nabble.com/Delay-before-starting-MDA-td7585759.html
+// all settings (time points, positions, save) must be set in the MDA window
+// runnables can be attached by running other scripts beforehand
+
+double waitSec = 10;
+
+//mm.acquisitions().clearRunnables();
+
+// DO NOT EDIT BELOW
+import ij.gui.GenericDialog;
+GenericDialog gd = new GenericDialog("Delayed MDA");
+gd.addNumericField("Wait (sec)", waitSec, 1);
+gd.showDialog();
+if (gd.wasCanceled()) {
+	 Thread.interrupt(); // at the moment this simply raises an error ;)
+}
+
+waitSec = gd.getNextNumber();
+//mm.scripter().message("Acquisition will start in " + waitSec + " sec...");
+print("Acquisition will start in " + waitSec + " sec...");
+Thread.sleep((long) waitSec * 1000);
+mm.acquisitions().runAcquisition();

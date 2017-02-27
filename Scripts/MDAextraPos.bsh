@@ -4,9 +4,9 @@
 // NB: you might want to uncheck "Sync exposure between main and MDA window" in MM's options.
 // Thomas Julou, February 2017
 
-suffix = "_DAW"; // suffix appened to the MDA name
-zStage = "Z";    // stage used for autofocusing (it might be different from Core-Focus)
-
+suffix = "_DAW"; // suffix appended to the MDA name
+zStage = "TIZDrive";    // stage used for autofocusing (it might be different from Core-Focus)
+                 // print device name using mmc.getLoadedDevicesOfType(mmcorej.DeviceType.StageDevice).get(0)
 
 // DO NOT EDIT BELOW
 import org.micromanager.data.Image;
@@ -108,6 +108,7 @@ runnable = new Runnable() {
  		mmc.waitForConfig(channelGroup, channelBefore);
 		mmc.setExposure(exposureBefore);
 		MultiStagePosition.goToPosition(posBefore, mm.getCore());
+		mmc.fullFocus();
 		
       ++frame;
       if (frame >= numFrames) {
@@ -122,4 +123,6 @@ mm.acquisitions().attachRunnable(-1, 0, 0, 0, runnable);
 //mm.scripter().message("Runnable successfully attached to MDA...");
 
 // Start MDA
+mmc.enableContinuousFocus(false); // disable PFS before starting MDA
+Thread.sleep(500); // wait 0.5s
 mm.acquisitions().runAcquisition();
