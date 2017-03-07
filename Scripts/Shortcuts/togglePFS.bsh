@@ -1,0 +1,2 @@
+
+mmc.enableContinuousFocus( !mmc.isContinuousFocusEnabled() );
