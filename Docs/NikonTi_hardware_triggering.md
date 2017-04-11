@@ -136,7 +136,7 @@ Several points have been taken into consideration:
 
 -   we want to control one TTL output for the pE-100 and 6 TTL outputs for the Spectra X (one per LED). Unfortunately, the default Arduino firmware for MM has only 6 outputs. Instead of hacking this firmware and the corresponding device adapter, we took advantage of the fact that we only want LEDs to be active one at a time and used demultiplexer chip ([CD74HCT138](../Manuals/Arduino/cd74hc238.pdf)). Such an IC take a binary signal as input (here 3 bits encoding a 0-7 value) and set the corresponding output pin (out of here 8 pins) active; for instance if the signal (provided by the 3 lowest bits of the Arduino `switch state` variable) is b011 then pin 5 is active. The chip we chose is a demux-inverter which means that output pins are HIGH by default and become LOW when active. This is convenient because the Spectra X external trigger is active-low. Output pins 1-6 are connected to DB-15HD connector (a.k.a. VGA connector) following the Spectra X connector mapping. Pin 0 must remain unconnected in order to be able to turn the Spectra X dark.
 -   in order to save Arduino pins for future applications, we control the pE-100 with the eighth pin of the demux-inverter. Since this device is active-high, the output pin 7 of the demux-inverter is connected to a BNC connector through an inverter IC ([MC74H04N](../Manuals/Arduino/mc74hc04.pdf)).
--   in order to use hardware-based synchronization, it is important that the Arduino has an external trigger connected to its pin 2: illumination will occur only when the camera is exposing (to minimize bleaching and photodamage) and the setup state will be updated every time a new signal is detected. Since the Flash4 outputs 3.3V signals (CMOS logic with (\(V_{OH}=2.4V\))), and the Arduino logic is 5V (\(V_{IH}=3.0V\)), a level converter is required to raise the 3.3V signal to 5V; we use a design inspired by Sparkfun's "[Logic Level Converter](https://learn.sparkfun.com/tutorials/bi-directional-logic-level-converter-hookup-guide#board-overview)" with a similar transistor ([Fairchild BS170](../Manuals/Arduino/BS170.pdf)).
+-   in order to use hardware-based synchronization, it is important that the Arduino has an external trigger connected to its pin 2: illumination will occur only when the camera is exposing (to minimize bleaching and photodamage) and the setup state will be updated every time a new signal is detected. Since the Flash4 outputs 3.3V signals (CMOS logic with (*V*<sub>*O**H*</sub> = 2.4*V*)), and the Arduino logic is 5V (*V*<sub>*I**H*</sub> = 3.0*V*), a level converter is required to raise the 3.3V signal to 5V; we use a design inspired by Sparkfun's "[Logic Level Converter](https://learn.sparkfun.com/tutorials/bi-directional-logic-level-converter-hookup-guide#board-overview)" with a similar transistor ([Fairchild BS170](../Manuals/Arduino/BS170.pdf)).
 -   in order to be able to us this shield for software-based control as well, we set a 5V pull-up on the input so that the output is always active when no cable is connected to the input (but when the Arduino switch state is 0).
 
 NB: although the demux-inverter has ENABLE inputs that could be use to set all pins inactive when the camera is not exposing (instead of the Arduino trigger pin), it is not suitable for hardware-based synchronization since it does not allow the setup state to be updated when a new signal is received.
@@ -202,7 +202,14 @@ Remarks:
 
 ### Hardware-triggered control of z positions
 
-In construction…
+In order to acquire fast, multi-channels z stacks, we use a piezo whose controller has a device adapter which is sequenceable (Mad City Labs, [NanoDrive](https://micro-manager.org/wiki/MCL_NanoDrive)).
+
+As soon as the sequence defined in the MDA window involves only sequenceable changes (in particular constant exposure time and illumination states that involves only changing the Arduino state), the acquisition is performed using hardware triggering. Since in our setup the camera pulse are generated *after* each frame, we rely on a dedicated property of the piezo device adapter ("Shift sequence by 1") so that the piezo moves already at the first pulse (by default, the first pulse is ignored since MM starts the sequence only after the setup has reached the first position).
+
+Know limitations:
+
+-   when the number of sequencable states of an MDA exceeds the length of the shortest buffer involved (in our case, the Arduino: its buffer has only 12 states saved), the sequences are split in a complicated way. As a consequence, the acquisition is slower; moreover the planes of the resulting stack are mixed up.
+-   the skip frames checkbox of the MDA window is apparently not supported for sequencable MDA (the series of plane / channel is erroneous).
 
 <!-- ## Remarks -->
 ### References
