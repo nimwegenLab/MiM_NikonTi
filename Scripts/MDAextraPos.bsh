@@ -81,6 +81,8 @@ runnable = new Runnable() {
    	
 		// go to position, autofocus, and update z coordinate
 		MultiStagePosition.goToPosition(pos, mm.getCore());
+		mmc.waitForDevice(xyStage);
+		mmc.waitForDevice(zStage);
 		mmc.fullFocus();
 		pos = new MultiStagePosition(xyStage, xPos, yPos, zStage, mmc.getPosition(zStage));
 
@@ -108,6 +110,8 @@ runnable = new Runnable() {
  		mmc.waitForConfig(channelGroup, channelBefore);
 		mmc.setExposure(exposureBefore);
 		MultiStagePosition.goToPosition(posBefore, mm.getCore());
+		mmc.waitForDevice(xyStage);
+		mmc.waitForDevice(zStage);
 		mmc.fullFocus();
 		
       ++frame;
