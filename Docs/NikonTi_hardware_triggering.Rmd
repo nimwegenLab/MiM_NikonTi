@@ -211,7 +211,14 @@ Remarks:
 
 ### Hardware-triggered control of z positions
 
-In construction…
+In order to acquire fast, multi-channels z stacks, we use a piezo whose controller has a device adapter which is sequenceable (Mad City Labs, [NanoDrive](https://micro-manager.org/wiki/MCL_NanoDrive)).
+
+As soon as the sequence defined in the MDA window involves only sequenceable changes (in particular constant exposure time and illumination states that involves only changing the Arduino state), the acquisition is performed using hardware triggering. Since in our setup the camera pulse are generated _after_ each frame, we rely on a dedicated property of the piezo device adapter ("Shift sequence by 1") so that the piezo moves already at the first pulse (by default, the first pulse is ignored since MM starts the sequence only after the setup has reached the first position).
+
+Know limitations:
+
+- when the number of sequencable states of an MDA exceeds the length of the shortest buffer involved (in our case, the Arduino: its buffer has only 12 states saved), the sequences are split in a complicated way. As a consequence, the acquisition is slower; moreover the planes of the resulting stack are mixed up.
+- the skip frames checkbox of the MDA window is apparently not supported for sequencable MDA (the series of plane / channel is erroneous).
 
 
 

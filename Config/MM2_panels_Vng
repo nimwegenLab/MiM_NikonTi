@@ -14,7 +14,7 @@
       "rectHeight": 1,
       "config": {
         "scriptPath": {
-          "PropVal": "C:\\NikonTiSetup\\Scripts\\ROImanager.bsh",
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\Shortcuts\\ROImanager.bsh",
           "PropType": "String"
         },
         "__MM_CustomIcon": {
@@ -86,7 +86,7 @@
       "rectHeight": 1,
       "config": {
         "scriptPath": {
-          "PropVal": "C:\\NikonTiSetup\\Scripts\\clearRunnable.bsh",
+          "PropVal": "C:\\NikonTiSetup\\Scripts\\Shortcuts\\clearRunnable.bsh",
           "PropType": "String"
         },
         "__MM_CustomIcon": {

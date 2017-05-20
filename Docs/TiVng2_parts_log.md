@@ -86,3 +86,6 @@ Installation completed.
 - fluorescence illumination manually centered (introducing a small tilt at the LLG port)
 - hall effect sensors are not installed yet
 
+# 20170411 (Thomas)
+- upgraded MM2 to the last nightly build: fix the position name tag issue.
+
