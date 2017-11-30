@@ -1,0 +1,109 @@
+// modified from multipos_multiexp.bsh
+// this runnable is used to bleach all position at certain frames
+// bleaching is performed by acquiring a picture (hence the fluo lamp is controlled by the camera) that is not saved
+// bleaching channel, duration and intensity are controllable
+
+// must be run with Blanking ON
+// must be run (every time!) before starting MDA
+
+
+String[] bleachChannelValues = {"GFP","GFP","GFP","GFP","GFP",
+"GFP","GFP","GFP","GFP","GFP"};
+int[] bleachChannelExposures = {2000,2000,2000,2000,2000,
+2000,2000,2000,2000,2000};
+int[] bleachChannelIntensities = {5,5,5,5,5,
+5,5,5,5,5};
+
+int[] bleachFramesIndexes = {1, 3}; // frame index (zero-based)
+
+// define the mapping between fluo channels and Spectra colours
+// NB: done using properties rather than group so that arbitrary intensity values can be used (instead of presets only)
+channelIntLabels = new HashMap();
+channelIntLabels.put("GFP", "Cyan_Level");
+//channelIntLabels.put("YFP (Tri)", "Teal_Level");
+//channelIntLabels.put("mCherry (Dual)", "Green_Level");
+
+
+// DO NOT EDIT BELOW
+import org.micromanager.api.PositionList;
+import org.micromanager.api.MultiStagePosition;
+//acq.clearRunnables();
+
+runnable_bleach = new Runnable() {
+	channelGroup = mmc.getChannelGroup();
+	int i = 0;
+   int fr_count = 0;
+	savedChannelInts = new String[channelIntLabels.size()];
+
+	arrayContainsInt(myArray, myInt) {
+	   for(idx:myArray) {
+	        if (idx == myInt) {
+	            return(true);
+	        }
+	    }
+     return(false);
+	}
+
+   public void run() {
+		PositionList pl = gui.getPositionList();
+		channels = acq.getChannels();
+
+		if (arrayContainsInt(bleachFramesIndexes, fr_count) ) {
+			print("Bleaching at frame " + fr_count);
+			
+			// save current config and pos
+	      savedExp = mmc.getExposure();
+	      savedChannel = mmc.getCurrentConfig(channelGroup);
+	      for (c=0; c<channelIntLabels.size(); c++) {
+	      	chKey = channelIntLabels.keySet().toArray()[c];
+      		savedChannelInts[c] = mmc.getProperty("SpectraX", channelIntLabels.get(chKey));
+	      }
+
+			//switch to opaque
+			mmc.setProperty("TILightPath", "Label", "3-Right100");
+			mmc.waitForDevice("TILightPath");
+
+			// loop on all positions
+			for (pos_count=0; pos_count<pl.getNumberOfPositions(); pos_count++) {
+				MultiStagePosition.goToPosition(pl.getPosition(pos_count), mmc);
+				mmc.waitForDevice(mmc.getXYStageDevice());
+
+				// set bleaching config
+		      mmc.setExposure(bleachChannelExposures[pos_count]);
+		      mmc.setConfig(channelGroup, bleachChannelValues[pos_count]);
+		      mmc.waitForConfig(channelGroup, bleachChannelValues[pos_count]);
+
+				mmc.setProperty("SpectraX", channelIntLabels.get(bleachChannelValues[pos_count]), 
+					bleachChannelIntensities[pos_count]);
+				
+				// expose (without saving the image)
+				mmc.snapImage();
+			}
+
+			// switch back to camera
+			mmc.setProperty("TILightPath", "Label", "2-Left100");
+			mmc.waitForDevice("TILightPath");
+			
+			// restore config and pos
+	      mmc.setExposure(savedExp);
+	      mmc.setConfig(channelGroup, savedChannel);
+	      mmc.waitForConfig(channelGroup,savedChannel);
+
+	      for (c=0; c<channelIntLabels.size(); c++) {
+	      	chKey = channelIntLabels.keySet().toArray()[c];
+      		mmc.setProperty("SpectraX", channelIntLabels.get(chKey), savedChannelInts[c]);
+	      }
+	      
+			MultiStagePosition.goToPosition(pl.getPosition(0), mmc);
+			mmc.fullFocus();
+		}
+      
+		++i;
+		++fr_count;
+   }
+};
+
+// Run the runnable on all frames, positions, and channels,
+// -1 --> attach to all planes along given dimension
+acq.attachRunnable(-1,0,0,0,runnable_bleach); // f, p, c, s 
+print("Runnable for bleaching successfully attached to MDA.");
