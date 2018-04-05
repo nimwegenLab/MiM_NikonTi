@@ -212,3 +212,5 @@ It sounds like the water circulation is lower than previously (noticed a few day
 ## 20170227 (Thomas)
 - installed MM2
 
+##20180403 (tHOMAS)
+- checked EPI-FL diaphragm (still good, slightly recentered) 

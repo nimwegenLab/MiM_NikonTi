@@ -13,6 +13,10 @@ int[] customChannelExposures = {2000,2000,2000,2000,2000,
 String[] customChannelValues = {"GFP","GFP"," DIA Ph3 (GFP)"};
 int[] customChannelExposures = {210,210,20};
 
+int[] bleachFramesIndexes = {1, 3}; // frame index (zero-based)
+String[] bleachChannelValues = {"GFP","GFP"," DIA Ph3 (GFP)"};
+int[] bleachChannelExposures = {20,2010,20};
+
 
 // DO NOT EDIT BELOW
 import org.micromanager.api.PositionList;
@@ -21,17 +25,34 @@ acq.clearRunnables();
 runnable = new Runnable() {
 	channelGroup = mmc.getChannelGroup();
 	int i = 0;
-   int ch_count = 0;
+	int fr_count = 0;
    int pos_count = 0;
+	int ch_count = 0;
+
+	arrayContainsInt(myArray, myInt) {
+	   for(idx:myArray) {
+	        if (idx == myInt) {
+	            return(true);
+	        }
+	    }
+     return(false);
+	}
+	
    public void run() {
 		PositionList pl = gui.getPositionList();
 		channels = acq.getChannels();
 		//channel = channels.get(ch_count);
 
       if (ch_count == customChannelIndex) { // custom channel
-	      mmc.setExposure(customChannelExposures[pos_count]);
-	      mmc.setConfig(channelGroup, customChannelValues[pos_count]);
-	      mmc.waitForConfig(channelGroup, customChannelValues[pos_count]);
+			if (arrayContainsInt(bleachFramesIndexes, fr_count) ) {
+		      mmc.setExposure(bleachChannelExposures[pos_count]);
+		      mmc.setConfig(channelGroup, bleachChannelValues[pos_count]);
+		      mmc.waitForConfig(channelGroup, bleachChannelValues[pos_count]);				
+			} else {
+		      mmc.setExposure(customChannelExposures[pos_count]);
+		      mmc.setConfig(channelGroup, customChannelValues[pos_count]);
+		      mmc.waitForConfig(channelGroup, customChannelValues[pos_count]);
+			}
       }
       
  //     print("Image " + i);
@@ -46,6 +67,7 @@ runnable = new Runnable() {
 		}
 		if (pos_count >= pl.getNumberOfPositions()) {
 			pos_count = 0;
+			++fr_count;
 		}
    }
 };
