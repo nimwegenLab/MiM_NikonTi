@@ -92,12 +92,14 @@ The integrated temperature controller is [Omron E5CN-H](https://www.ia.omron.com
 
 # Flow control
 
+Note that this pressure controller is the legacy MK3 and hence unable to connect to digital flow meters.
+
 ID | SN           | Use | Comments
 ---|--------------|-----|---------
-1  | FLOW-02-4854 | Ch1 | was clogged by GW in 09.2016, cleaned up and in use again since 12.2016
-2  | FLOW-02-4852 | Ch2 | 
-3  | FLOW-02-4853 |     | used temporarily for Ch1 (10-11.2016)
-4  | FLOW-02-4855 |     | 
+1  | FLOW-02-4854 |     | was clogged by GW in 09.2016, cleaned up and in use again since 12.2016
+2  | FLOW-02-4852 |     | formerly Ch2: clogged by GW
+3  | FLOW-02-4853 | Ch1 | used for Ch1 since 10-11.2016
+4  | FLOW-02-4855 | Ch2 | used for Ch2
 
 
 
@@ -212,5 +214,12 @@ It sounds like the water circulation is lower than previously (noticed a few day
 ## 20170227 (Thomas)
 - installed MM2
 
-##20180403 (tHOMAS)
+## 20180403 (Thomas)
 - checked EPI-FL diaphragm (still good, slightly recentered) 
+
+## 201806xx (Thomas)
+- BIOS upgrade (fix Meltdown)
+
+## 20180703 (Thomas)
+- cleaned FLOW-02-4854 and FLOW-02-4852 with 2% tergazyme during 2 hours.
+
