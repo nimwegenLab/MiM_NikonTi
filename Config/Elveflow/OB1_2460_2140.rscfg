@@ -74,12 +74,12 @@
 <Refnum>
 <Name>Reg Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3D800023</Val>
+<Val>0x7BF00059</Val>
 </Refnum>
 <Refnum>
 <Name>Sens Connected Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3E900034</Val>
+<Val>0x78F0002E</Val>
 </Refnum>
 <DBL>
 <Name>Time ref</Name>
@@ -94,11 +94,11 @@
 </String>
 <DBL>
 <Name>P</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>I</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>D</Name>
@@ -117,7 +117,7 @@
 </DBL>
 <U32>
 <Name>Time</Name>
-<Val>28975250</Val>
+<Val>0</Val>
 </U32>
 </Cluster>
 <DBL>
@@ -135,7 +135,7 @@
 </Cluster>
 <DBL>
 <Name>pressure to be set</Name>
-<Val>2150.00000000000000</Val>
+<Val>2460.00000000000000</Val>
 </DBL>
 <String>
 <Name>Name</Name>
@@ -164,179 +164,7 @@
 <Refnum>
 <Name>Sens Seen Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3E900034</Val>
-</Refnum>
-<Boolean>
-<Name>have Focus</Name>
-<Val>1</Val>
-</Boolean>
-<DBL>
-<Name>Next Target value</Name>
-<Val>2140.00000000000000</Val>
-</DBL>
-<Boolean>
-<Name>Update required</Name>
-<Val>0</Val>
-</Boolean>
-</Cluster>
-</Object>
-<Object>
-<Name>RSchannel.lvclass</Name>
-<NumLevels>1</NumLevels>
-<Class>RSchannel.lvclass</Class>
-<Version>1.0.0.44</Version>
-<Cluster>
-<Name>RSchannel.lvclass</Name>
-<NumElts>15</NumElts>
-<Boolean>
-<Name>Feedback</Name>
-<Val>0</Val>
-</Boolean>
-<Cluster>
-<Name>Profile</Name>
-<NumElts>8</NumElts>
-<EW>
-<Name>Type</Name>
-<Choice>Constant</Choice>
-<Choice>Ramp</Choice>
-<Choice>Sinus</Choice>
-<Choice>Square</Choice>
-<Choice>Triangle</Choice>
-<Choice>Custom</Choice>
-<Val>0</Val>
-</EW>
-<DBL>
-<Name>Set cst</Name>
-<Val>2140.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Set max</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Set min</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Period</Name>
-<Val>10.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Phase</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Disymetry</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<Array>
-<Name>Custom data</Name>
-<Dimsize>0</Dimsize>
-<Dimsize>0</Dimsize>
-<DBL>
-<Name>Numeric</Name>
-<Val></Val>
-</DBL>
-</Array>
-</Cluster>
-<Boolean>
-<Name>ON</Name>
-<Val>1</Val>
-</Boolean>
-<Refnum>
-<Name>Reg Ref</Name>
-<RefKind>Data Value Reference</RefKind>
-<Val>0x3D900024</Val>
-</Refnum>
-<Refnum>
-<Name>Sens Connected Ref</Name>
-<RefKind>Data Value Reference</RefKind>
-<Val>0x3EB00036</Val>
-</Refnum>
-<DBL>
-<Name>Time ref</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<Cluster>
-<Name>Regulation</Name>
-<NumElts>9</NumElts>
-<String>
-<Name>PID type</Name>
-<Val>PID basic</Val>
-</String>
-<DBL>
-<Name>P</Name>
-<Val>1.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>I</Name>
-<Val>1.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>D</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<DBL>
-<Name>Isat</Name>
-<Val>1.00000000000000</Val>
-</DBL>
-<Cluster>
-<Name>Int error</Name>
-<NumElts>2</NumElts>
-<DBL>
-<Name>Error</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-<U32>
-<Name>Time</Name>
-<Val>28975250</Val>
-</U32>
-</Cluster>
-<DBL>
-<Name>Smooth rate</Name>
-<Val>500.00000000000000</Val>
-</DBL>
-<Boolean>
-<Name>Auto-tune PID?</Name>
-<Val>0</Val>
-</Boolean>
-<DBL>
-<Name>Max flow rate</Name>
-<Val>0.00000000000000</Val>
-</DBL>
-</Cluster>
-<DBL>
-<Name>pressure to be set</Name>
-<Val>1800.00000000000000</Val>
-</DBL>
-<String>
-<Name>Name</Name>
-<Val>OB1 Ch. 2</Val>
-</String>
-<Array>
-<Name>Coupling</Name>
-<Dimsize>0</Dimsize>
-<Cluster>
-<Name>Cluster</Name>
-<NumElts>2</NumElts>
-<DBL>
-<Name>Factor</Name>
-<Val></Val>
-</DBL>
-<String>
-<Name>Virtual ch</Name>
-<Val></Val>
-</String>
-</Cluster>
-</Array>
-<DBL>
-<Name>Increment</Name>
-<Val>10.00000000000000</Val>
-</DBL>
-<Refnum>
-<Name>Sens Seen Ref</Name>
-<RefKind>Data Value Reference</RefKind>
-<Val>0x3EB00036</Val>
+<Val>0x78F0002E</Val>
 </Refnum>
 <Boolean>
 <Name>have Focus</Name>
@@ -379,7 +207,179 @@
 </EW>
 <DBL>
 <Name>Set cst</Name>
-<Val>2030.00000000000000</Val>
+<Val>2140.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Set max</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Set min</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Period</Name>
+<Val>10.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Phase</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Disymetry</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<Array>
+<Name>Custom data</Name>
+<Dimsize>0</Dimsize>
+<Dimsize>0</Dimsize>
+<DBL>
+<Name>Numeric</Name>
+<Val></Val>
+</DBL>
+</Array>
+</Cluster>
+<Boolean>
+<Name>ON</Name>
+<Val>1</Val>
+</Boolean>
+<Refnum>
+<Name>Reg Ref</Name>
+<RefKind>Data Value Reference</RefKind>
+<Val>0x7C00005A</Val>
+</Refnum>
+<Refnum>
+<Name>Sens Connected Ref</Name>
+<RefKind>Data Value Reference</RefKind>
+<Val>0x79100030</Val>
+</Refnum>
+<DBL>
+<Name>Time ref</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<Cluster>
+<Name>Regulation</Name>
+<NumElts>9</NumElts>
+<String>
+<Name>PID type</Name>
+<Val>PID basic</Val>
+</String>
+<DBL>
+<Name>P</Name>
+<Val>1.00000000000000E-3</Val>
+</DBL>
+<DBL>
+<Name>I</Name>
+<Val>1.00000000000000E-3</Val>
+</DBL>
+<DBL>
+<Name>D</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<DBL>
+<Name>Isat</Name>
+<Val>1.00000000000000</Val>
+</DBL>
+<Cluster>
+<Name>Int error</Name>
+<NumElts>2</NumElts>
+<DBL>
+<Name>Error</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+<U32>
+<Name>Time</Name>
+<Val>0</Val>
+</U32>
+</Cluster>
+<DBL>
+<Name>Smooth rate</Name>
+<Val>500.00000000000000</Val>
+</DBL>
+<Boolean>
+<Name>Auto-tune PID?</Name>
+<Val>0</Val>
+</Boolean>
+<DBL>
+<Name>Max flow rate</Name>
+<Val>0.00000000000000</Val>
+</DBL>
+</Cluster>
+<DBL>
+<Name>pressure to be set</Name>
+<Val>2140.00000000000000</Val>
+</DBL>
+<String>
+<Name>Name</Name>
+<Val>OB1 Ch. 2</Val>
+</String>
+<Array>
+<Name>Coupling</Name>
+<Dimsize>0</Dimsize>
+<Cluster>
+<Name>Cluster</Name>
+<NumElts>2</NumElts>
+<DBL>
+<Name>Factor</Name>
+<Val></Val>
+</DBL>
+<String>
+<Name>Virtual ch</Name>
+<Val></Val>
+</String>
+</Cluster>
+</Array>
+<DBL>
+<Name>Increment</Name>
+<Val>10.00000000000000</Val>
+</DBL>
+<Refnum>
+<Name>Sens Seen Ref</Name>
+<RefKind>Data Value Reference</RefKind>
+<Val>0x79100030</Val>
+</Refnum>
+<Boolean>
+<Name>have Focus</Name>
+<Val>1</Val>
+</Boolean>
+<DBL>
+<Name>Next Target value</Name>
+<Val>2140.00000000000000</Val>
+</DBL>
+<Boolean>
+<Name>Update required</Name>
+<Val>0</Val>
+</Boolean>
+</Cluster>
+</Object>
+<Object>
+<Name>RSchannel.lvclass</Name>
+<NumLevels>1</NumLevels>
+<Class>RSchannel.lvclass</Class>
+<Version>1.0.0.44</Version>
+<Cluster>
+<Name>RSchannel.lvclass</Name>
+<NumElts>15</NumElts>
+<Boolean>
+<Name>Feedback</Name>
+<Val>0</Val>
+</Boolean>
+<Cluster>
+<Name>Profile</Name>
+<NumElts>8</NumElts>
+<EW>
+<Name>Type</Name>
+<Choice>Constant</Choice>
+<Choice>Ramp</Choice>
+<Choice>Sinus</Choice>
+<Choice>Square</Choice>
+<Choice>Triangle</Choice>
+<Choice>Custom</Choice>
+<Val>0</Val>
+</EW>
+<DBL>
+<Name>Set cst</Name>
+<Val>2058.00000000000000</Val>
 </DBL>
 <DBL>
 <Name>Set max</Name>
@@ -418,12 +418,12 @@
 <Refnum>
 <Name>Reg Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3DA00025</Val>
+<Val>0x7C10005B</Val>
 </Refnum>
 <Refnum>
 <Name>Sens Connected Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3CE00019</Val>
+<Val>0x7B50004F</Val>
 </Refnum>
 <DBL>
 <Name>Time ref</Name>
@@ -438,11 +438,11 @@
 </String>
 <DBL>
 <Name>P</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>I</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>D</Name>
@@ -461,7 +461,7 @@
 </DBL>
 <U32>
 <Name>Time</Name>
-<Val>28975250</Val>
+<Val>0</Val>
 </U32>
 </Cluster>
 <DBL>
@@ -479,7 +479,7 @@
 </Cluster>
 <DBL>
 <Name>pressure to be set</Name>
-<Val>1745.00000000000000</Val>
+<Val>2058.00000000000000</Val>
 </DBL>
 <String>
 <Name>Name</Name>
@@ -508,7 +508,7 @@
 <Refnum>
 <Name>Sens Seen Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3D20001D</Val>
+<Val>0x7B900053</Val>
 </Refnum>
 <Boolean>
 <Name>have Focus</Name>
@@ -516,7 +516,7 @@
 </Boolean>
 <DBL>
 <Name>Next Target value</Name>
-<Val>2028.81000000000017</Val>
+<Val>2058.00000000000000</Val>
 </DBL>
 <Boolean>
 <Name>Update required</Name>
@@ -590,12 +590,12 @@
 <Refnum>
 <Name>Reg Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3DB00026</Val>
+<Val>0x7C20005C</Val>
 </Refnum>
 <Refnum>
 <Name>Sens Connected Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3CF0001A</Val>
+<Val>0x7B600050</Val>
 </Refnum>
 <DBL>
 <Name>Time ref</Name>
@@ -610,11 +610,11 @@
 </String>
 <DBL>
 <Name>P</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>I</Name>
-<Val>1.00000000000000</Val>
+<Val>1.00000000000000E-3</Val>
 </DBL>
 <DBL>
 <Name>D</Name>
@@ -633,7 +633,7 @@
 </DBL>
 <U32>
 <Name>Time</Name>
-<Val>28975250</Val>
+<Val>0</Val>
 </U32>
 </Cluster>
 <DBL>
@@ -680,7 +680,7 @@
 <Refnum>
 <Name>Sens Seen Ref</Name>
 <RefKind>Data Value Reference</RefKind>
-<Val>0x3D30001E</Val>
+<Val>0x7BA00054</Val>
 </Refnum>
 <Boolean>
 <Name>have Focus</Name>

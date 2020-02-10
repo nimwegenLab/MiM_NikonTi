@@ -99,7 +99,7 @@ ID | SN           | Use | Comments
 1  | FLOW-02-4854 |     | was clogged by GW in 09.2016, cleaned up and in use again since 12.2016
 2  | FLOW-02-4852 |     | formerly Ch2: clogged by GW
 3  | FLOW-02-4853 | Ch1 | used for Ch1 since 10-11.2016
-4  | FLOW-02-4855 | Ch2 | used for Ch2
+4  | FLOW-02-4855 | Ch2 | used for Ch2: clogged by TJ
 
 
 
@@ -222,4 +222,18 @@ It sounds like the water circulation is lower than previously (noticed a few day
 
 ## 20180703 (Thomas)
 - cleaned FLOW-02-4854 and FLOW-02-4852 with 2% tergazyme during 2 hours.
+- updated ESI from 3.1.11 to 3.1.13
+
+## 20181212 (Thomas + Theo)
+- updated ESI from 3.1.13 to 3.2.3
+- install new pressure controller (4 vacum channels)
+
+## 20190606 (Thomas)
+- FS2 #FLOW-02-4855 terminally clogged... no problem with priming during the experiment, flow ok at start. Impossible to rince at the end. Tried 2% Helmanex and 1% Tergazyme during >4h at 3bar!!
+
+## 20190823 (Thomas)
+- end of PCO.flim test.
+- remounted Flash4 and Spectra light guide. Set again the aperture and field diaphragm for Epi illumination.
+
+
 
