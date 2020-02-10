@@ -235,5 +235,27 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - end of PCO.flim test.
 - remounted Flash4 and Spectra light guide. Set again the aperture and field diaphragm for Epi illumination.
 
-
-
+## 20200210 (Thomas)
+- OS updated to Win 10 Enterprise LTSC
+- reinstalled
+  + Git LFS 2.10.0
+  + Hamamatsu DCAM-API v19.12.5901 (USB camera drivers only)
+  + USB3 PCIE card driver: U3-PCIE1XG202_1060143_dr_3.zip
+  + Ti_SetupTool_Ver446_64bit_E.zip
+  + MM 1.4.22 (to /C/Programs)
+  + MMSetup_64bit_2.0.0-gamma1_20200209.exe (to /C/Programs)
+  + Arduino IDE + drivers
+  + ESI v 3.04 (NB: declined NI request to disable Win "Fast startup")
+  + Utils: Ditto, Win10_BrightnessSlider v1.7.9, notepad++, WinDirStat(32-bit)
+  NB: Ditto uninstalled, replaced by OS keyboard history
+- calibrated OB1 to -650;+5000 mbar range
+- updated config file:
+  + change Arduino port (COM6 > COM4) 
+  + re-read filters
+  + re-read objectives
+- settings in MM
+  + disabled save XY in separate files
+  + enabled always default user
+- verified that following modes work:
+  + MDA with blanking
+  + MDA sequenceable (no piezo)
