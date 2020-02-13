@@ -256,6 +256,7 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - settings in MM
   + disabled save XY in separate files
   + enabled always default user
+  + enable TIXYDrive-TransposeMirrorX and on-the-fly 90 rotation to obtain correct stage displacement
 - verified that following modes work:
   + MDA with blanking
   + MDA sequenceable (no piezo)

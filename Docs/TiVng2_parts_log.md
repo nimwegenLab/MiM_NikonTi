@@ -89,3 +89,9 @@ Installation completed.
 # 20170411 (Thomas)
 - upgraded MM2 to the last nightly build: fix the position name tag issue.
 
+## 20200212 (Thomas)
+- OS updated to Win 10 Enterprise LTSC (clone of TiVng1 computer)
+- had to uninstall-reinstall ESI v 3.04 (NB: declined again NI request to disable Win "Fast startup")
+- calibrated OB1 to -850;+5000 mbar range
+
+- replaced LED controller (LEDD1B M00486934) with same model (M00493622). Disconnected the breakout box to hack TiDIA control. LED Controller now used in TRIG mode (intensity set by the manual knob).
