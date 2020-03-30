@@ -1,4 +1,4 @@
-// modified from multipos_multiexp.bsh
+// multipos_multibleach.bsh for MM1.4 (modified from multipos_multiexp.bsh)
 // this runnable is used to bleach all position at certain frames
 // bleaching is performed by acquiring a picture (hence the fluo lamp is controlled by the camera) that is not saved
 // bleaching channel, duration and intensity are controllable
@@ -14,12 +14,17 @@ int[] bleachChannelExposures = {2000,2000,2000,2000,2000,
 int[] bleachChannelIntensities = {5,5,5,5,5,
 5,5,5,5,5};
 
+//String[] bleachChannelValues = {"GFP","GFP","GFP"};
+//int[] bleachChannelExposures = {20,20,210};
+//int[] bleachChannelIntensities = {97,5,0}; // percent (as int)
+
 int[] bleachFramesIndexes = {1, 3}; // frame index (zero-based)
 
 // define the mapping between fluo channels and Spectra colours
 // NB: done using properties rather than group so that arbitrary intensity values can be used (instead of presets only)
 channelIntLabels = new HashMap();
 channelIntLabels.put("GFP", "Cyan_Level");
+channelIntLabels.put("DAPI", "Violet_Level");
 //channelIntLabels.put("YFP (Tri)", "Teal_Level");
 //channelIntLabels.put("mCherry (Dual)", "Green_Level");
 

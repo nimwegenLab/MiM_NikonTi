@@ -1,4 +1,4 @@
-// modified from manualAcq.bsh
+// multipos_multiexp.bsh for MM2 (modified from manualAcq.bsh)
 // all settings (time points, positions, save; including other non-default channels) must be set in the MDA window
 // must have enough channels defined in MDA (so that the custom channel index exists)
 // must be run (every time!) before starting MDA
