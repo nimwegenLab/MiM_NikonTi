@@ -56,6 +56,14 @@ SN: 300291
 Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 
 
+## Piezo
+
+Stage: Nano-F25HS (serial no: MCLS03519)
+Controller: ND85-USB161-ISS (serial no: MCLC03519)
+
+Analog input: 0V to 10V
+
+
 # Computer
 Dell Precision Tower 7910 (pz-rgen02-pdw01)
 System drive (C): SSD (256gb)
