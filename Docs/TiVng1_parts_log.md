@@ -271,3 +271,5 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - Renamed correctly TiVng1 conf files.
 - Downloaded and installed new Micro-Manager2 nightly build
   + Nightly build: 8th of July 2020
+- Changed the Bios to disable Dell C-states
+  + Performance > C-states Control > Disable
