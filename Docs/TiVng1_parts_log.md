@@ -260,3 +260,14 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - verified that following modes work:
   + MDA with blanking
   + MDA sequenceable (no piezo)
+  
+## 20200708 (Dany)
+- Changed power settings on windows (done before, but forgot to mention it)
+  + Turn off hard disk after: 0 (= Never)
+  + Sleep after: Never
+  + USB selective suspend setting: Disabled
+  + PCI express, link state power management: Off
+  + Processor power management, minimum processor state: 100%
+- Renamed correctly TiVng1 conf files.
+- Downloaded and installed new Micro-Manager2 nightly build
+  + Nightly build: 8th of July 2020
