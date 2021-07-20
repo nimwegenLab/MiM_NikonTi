@@ -261,7 +261,11 @@ It sounds like the water circulation is lower than previously (noticed a few day
   + MDA with blanking
   + MDA sequenceable (no piezo)
   
-## 20200708 (Dany)
+## 20210304 (Dany)
+- Camera had issues: it would stop working suddenly for no reasons (not even hot)
+- Hamamatsu provided a replacement camera (C11440, Orca-Flash4.0) that was installed by Marc Fischer (Hamamatsu), in presence of Theo and Lis. He mistakenly connected the Arduino to the "ext trigger", instead of the "timing" (first from the top). Theo and Lis corrected that.
+  
+## 20210708 (Dany)
 - Changed power settings on windows (done before, but forgot to mention it)
   + Turn off hard disk after: 0 (= Never)
   + Sleep after: Never
@@ -273,3 +277,12 @@ It sounds like the water circulation is lower than previously (noticed a few day
   + Nightly build: 8th of July 2020
 - Changed the Bios to disable Dell C-states
   + Performance > C-states Control > Disable
+- Replacement camera still on the setup!
+
+## 20210720 (Dany)
+- End of last year, we figured out the objective (100x) was not right anymore (Lis).
+- We sent it to Nikon for repair. Since then, we are routinely using a replacement objective.
+- Noticed a scratch on it. Will add the picture later.
+- Installed Micromanager2 new version: Micro-Manager-2.0.0-20210713
+  
+
