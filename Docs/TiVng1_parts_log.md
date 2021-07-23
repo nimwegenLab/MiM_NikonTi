@@ -284,5 +284,14 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - We sent it to Nikon for repair. Since then, we are routinely using a replacement objective.
 - Noticed a scratch on it. Will add the picture later.
 - Installed Micromanager2 new version: Micro-Manager-2.0.0-20210713
+
+## 20210723 (Dany)
+- Saved picture of the objective
+  + Docs/figs/20210721_objective100x.jpg
+- Added jpg to lfs
+  + git lfs track "*.jpg"
+  + git add .gitattributes (just in case...)
+  + git add ./Docs/figs/20210721_objective100x.jpg
+- Committed everything and pushed to remote
   
 
