@@ -260,3 +260,10 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - verified that following modes work:
   + MDA with blanking
   + MDA sequenceable (no piezo)
+
+## 202107?? (Thomas)
+- Installed MM 2.0.0
+
+## 20211208 (Thomas)
+- Installed DCAM-SPY
+

@@ -110,3 +110,6 @@ Installation completed.
 - checked in BIOS that S-State setting was already disabled.
 
 - Updated ESI to 3.5.2 (written 3.5.3 on the installer).
+
+##20211208 (Thomas) 
+- Upgraded MM to last nightly built (2.0.1-20211207)
