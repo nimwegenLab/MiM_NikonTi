@@ -260,6 +260,7 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - verified that following modes work:
   + MDA with blanking
   + MDA sequenceable (no piezo)
+<<<<<<< HEAD
   
 ## 20210304 (Dany)
 - Camera had issues: it would stop working suddenly for no reasons (not even hot)
@@ -294,4 +295,11 @@ It sounds like the water circulation is lower than previously (noticed a few day
   + git add ./Docs/figs/20210721_objective100x.jpg
 - Committed everything and pushed to remote
   
+=======
+
+## 202107?? (Thomas)
+- Installed MM 2.0.0
+
+## 20211208 (Thomas)
+- Installed DCAM-SPY
 

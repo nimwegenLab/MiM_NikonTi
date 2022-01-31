@@ -56,6 +56,14 @@ SN: 300291
 Connected to the computer with USB3 (NB: works only on PCIe USB3 ports)
 
 
+## Piezo
+
+Stage: Nano-F25HS (serial no: MCLS03519)
+Controller: ND85-USB161-ISS (serial no: MCLC03519)
+
+Analog input: 0V to 10V
+
+
 # Computer
 Dell Precision Tower 7910 (pz-rgen02-pdw01)
 System drive (C): SSD (256gb)
@@ -86,7 +94,7 @@ Installation completed.
 - fluorescence illumination manually centered (introducing a small tilt at the LLG port)
 - hall effect sensors are not installed yet
 
-# 20170411 (Thomas)
+## 20170411 (Thomas)
 - upgraded MM2 to the last nightly build: fix the position name tag issue.
 
 ## 20200212 (Thomas)
@@ -95,3 +103,13 @@ Installation completed.
 - calibrated OB1 to -850;+5000 mbar range
 
 - replaced LED controller (LEDD1B M00486934) with same model (M00493622). Disconnected the breakout box to hack TiDIA control. LED Controller now used in TRIG mode (intensity set by the manual knob).
+
+## 20210628 (Thomas)
+- installed MM2g nightly built (20210515 since live does not work in 20210627).
+- changed power settings according to https://micro-manager.org/wiki/Personal_computer_setup.
+- checked in BIOS that S-State setting was already disabled.
+
+- Updated ESI to 3.5.2 (written 3.5.3 on the installer).
+
+##20211208 (Thomas) 
+- Upgraded MM to last nightly built (2.0.1-20211207)
