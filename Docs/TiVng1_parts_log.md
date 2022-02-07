@@ -260,8 +260,7 @@ It sounds like the water circulation is lower than previously (noticed a few day
 - verified that following modes work:
   + MDA with blanking
   + MDA sequenceable (no piezo)
-<<<<<<< HEAD
-  
+
 ## 20210304 (Dany)
 - Camera had issues: it would stop working suddenly for no reasons (not even hot)
 - Hamamatsu provided a replacement camera (C11440, Orca-Flash4.0) that was installed by Marc Fischer (Hamamatsu), in presence of Theo and Lis. He mistakenly connected the Arduino to the "ext trigger", instead of the "timing" (first from the top). Theo and Lis corrected that.

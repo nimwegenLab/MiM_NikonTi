@@ -118,9 +118,11 @@
    // pin connected to CS of TLV5618
    int latchPin = 5;
 
-   const int SEQUENCELENGTH = 12;  // this should be good enough for everybody;)
-   byte triggerPattern_[SEQUENCELENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0};
-   unsigned int triggerDelay_[SEQUENCELENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0};
+   const int SEQUENCELENGTH = 64;  // this should be good enough for everybody;)
+   byte triggerPattern_[SEQUENCELENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+   unsigned int triggerDelay_[SEQUENCELENGTH] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
    int patternLength_ = 0;
    byte repeatPattern_ = 0;
    volatile int triggerNr_; // total # of triggers in this run (0-based)
@@ -220,7 +222,7 @@
        case 6:
          if (waitForSerial(timeOut_)) {
            int pL = Serial.read();
-           if ( (pL >= 0) && (pL <= 12) ) {
+           if ( (pL >= 0) && (pL <= SEQUENCELENGTH) ) {
              patternLength_ = pL;
              Serial.write( byte(6));
              Serial.write( patternLength_);
