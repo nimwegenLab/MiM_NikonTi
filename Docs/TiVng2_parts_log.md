@@ -113,3 +113,7 @@ Installation completed.
 
 ##20211208 (Thomas) 
 - Upgraded MM to last nightly built (2.0.1-20211207)
+
+
+## 20230707 (Bor)
+- Testing the edit.
