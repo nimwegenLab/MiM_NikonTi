@@ -1,3 +1,4 @@
+
 The order in which documentation files are listed is meant to guide the first-time reader:
 
 `NikonTi_hardware_triggering.md` explains the principle of how the setup is configured, with hardware triggering of the different light sources. This is meant as a brand-agnostic tutorial.
