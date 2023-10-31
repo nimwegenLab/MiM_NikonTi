@@ -12,7 +12,7 @@ connected to the computer's serial port (no USB converter). Serial communication
 
 Excitation filters are placed in the SpectraX.
 
-Full table and more available from[Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). 
+Full table and more available from [Lumencor](https://github.com/vanNimwegenLab/MiM_NikonTi/blob/master/Manuals/SpectraX/SpectraX_power.pdf). 
 
 
 ## Filter cubes
