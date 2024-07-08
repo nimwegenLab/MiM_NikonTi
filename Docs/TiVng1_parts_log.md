@@ -4,6 +4,8 @@ author: Thomas Julou
 output: html_document
 ---
 
+### Important: this setup has been upgraded to a Nikon Ti2 model, see more at https://github.com/nimwegenLab/MiM_NikonTi2/blob/master/Docs/Ti2Vng1_parts_log.md.
+
 ## Objectives
 
 Magnification | NA    | WD (mm) | Phase contrast | Model
